@@ -1,0 +1,299 @@
+Hibernate is ORM tool - object reletional mapping. which implements and complied with the JPA spec.
+Used in the datalayer application.
+
+Problem trying to solve --> 
+Mapping member varialbes to columns
+Mapping reletionships
+Handling data types
+Managing the changes to the object state
+
+Object   Releation
+	Mapping
+
+	
+Saving object in the database without using hibernate
+JDBC Database configuration
+The model object --> object that we want to save
+Service method to create the model object
+Database design--> before i save we need to have table in the db
+Dao method to save the object using the sql
+
+The hibernate way
+JDBC Database configuration - Hibernate configuarion
+The Model object --> use the anotation to represent the columns of the table
+Service method to create the model object- use hibernate API
+Database design--> not needed -- it is configuarable.
+Dao method to save the object using the sql - not needed
+
+Configuration file hibernate-cfg.xml
+Configure session-factory --> using driver/url/user/password
+extra config --> connection-pool-config -- dilect --> to tell hibernate will know the type of language used for example oracle queries are diffrent from Mysql
+Show-sql whihc will show or hide the class
+Cache-provider-class --> here we need to configre the chche provder for second level cache
+hbm to ddl auto --> we value like create - recreate schema every time,update will not recreate only updates. 
+Mapping classes --> here we need to tell the classes relted to hibernate
+
+Create a model and confiure in the hibernate-cfg.xml in mapping class tag
+
+Create a session factory
+create session from the session-factory
+Use session to save or manipulate data using the model
+
+SessionFactory sessionFactory = new Configuration.configure().buildSessionFactory();
+Session session = sessionFactory.openSession()
+session.beginTransaction()
+session.save();
+session.getTransaction().commit();
+
+session.get(Class or entity class,primerykey of the object) --> will get the 
+session.get(User.class,1);
+
+Primary key
+Natural keys --> loginId is 
+
+Serrogate key --> 
+
+When you design tables with SQL Server, a table typically has a column or a number of columns that are known as the primary key. The primary key is a unique value that identifies each record.  Sometimes the primary key is made up of real data and these are normally referred to as natural keys, while other times the key is generated when a new record is inserted into a table.   When a primary key is generated at runtime, it is called a surrogate key.   A surrogate key is typically a numeric value.
+
+A surrogate key like a natural key is a column that uniquely identifies a single record in a table.  But this is where the similarity stops.  Surrogate keys are similar to surrogate mothers.   They are keys that don’t have a natural relationship with the rest of the columns in a table.  The surrogate key is just a value that is generated and then stored with the rest of the columns in a record.  The key value is typically generated at run time right before the record is inserted into a table. 
+
+----- Strart of Value Type ------
+difference between Entity type objects and Value type objects. We'll use the `@Embeddable` annotation to embed a value type object into our Entity class.
+User Address( with 4 memeber variables of address) One to one same as 
+Entity object has the value of its own and it represent the table column
+Value object is as of itself doesnot carry any meaning and it will has a meaning in the context of User ie it has to associate with the entity. 
+If we have fixed number of objects it is very to good to use embed the value object
+@Embeddable makes the 
+And primary key can be value object then  we need to use @EmbeddedId
+@ElementCollection will be collection of embeddable or value object.
+Use List which are indexed to create prymary key in the child tables automataically
+@CollectionId -- this is hibernate anotation
+Saving Collections (one to one and one to many and many to many)
+User and Address
+
+Configuring Collections and Adding Keys ****
+Hibernate manages data fetching and optimizations using proxy objects and how lazy initialization works.
+By default the fetch is lagy.. only when the user calls the child objects then it will run query and get the child obhjects.
+This is done by hibernate usign proxy pattren. when the user gets the parent object it gets the object of subclass (Proxy) which is create by hibernate by extending your entity. in this you have a call for your parent.get method.
+The proxy class get the records and it will call the parent method. 
+
+eager needs to be explicity configured - @ElementCollection(fetch = FetchType.EAGER)
+
+This class is not mapped in config class
+
+----- END of Value Type ------
+--- Entity inside Enity -------- 
+One To One Mapping - one of the relationship between tables (USER will have ONE VEHICLE)
+the column will be created where this anotation is used and the value is stored from the child table
+One To Many Mapping - one object has many object (USER will have multiple vehicle object)
+By defult it will create a new table called user_details_vehical means the parent_child table and add the refrence in that table means prymary keys
+Many To One
+
+The other way representing other side of the reletionships
+
+
+mappedBy and Many To Many Mapping
+
+JPA Standard automations.
+
+@Entity (name = "Name of the table") --> treat this class as entity class or hibernate mapping table --> providing the name for entire entity where will you use hsql
+@Table (name = "Set the table name") --> name for the table 
+@Id --> represent the primery key
+@GeneratedValue (strategy = (AUTO, IDENTITY, SEQUENCE-> sequencename, HILO); else by defult hibernate-sequencene -- it give a strategy to unique values for primay key.
+@Column (name = "column name")
+@Basic (fetch, optional) --> will be treat the same as hibernate fileds ..
+@Transiant --> it will not be persisted .. hibernate will skip this fileds
+@Temporal (TemporalType.Date) -- it will save as mentioned in the type else it is by defult Timestamp without the timezone
+@Lob - large object.. by defult it clob  else the string will be varchar (255)
+@Embeddable - embed a value type object into our Entity class (component in xml files)
+@Embedded - to include value type object into entity ( the value object is created using @Embeddable)
+@AttributeOverride (name = "street"  column = @Column(name = "HOME_STREE_NAME") --> used to override the coloumn names in case of Embeddable or value object if you are using more then one time.
+@AttributeOverrides  --> contains the more then one AttributeOverride annotation
+@EmbeddedId --> It will have the value object as primary key
+@ElementCollection(fetch = FetchType.EAGER) --> it will save the multiple embeddable object into the different table
+@JoinTable(name = "USER_ADDRESS", joinColumn = @JoinColumn(name = "USER_ID"))  --> it is not mandatory it will take the defaults -- name is the name of the table and joinColumn is the forign key
+
+@OnetoOne  --> to represent 
+@JoinColumn(name = "VEHICLE_ID")
+
+@OnetoMany
+@JoinTable(name = "USER_VEHICLE" , joinColumn=@joinColumn(name = "user_id"), inverseJoinColumn = @joinColumn(name ="vehicle_id"))
+Collection<Vehicle> vehicale = new ArryaList<>();
+@ManytoOne
+User user = new User();
+
+@OnetoMany(mappedBy = "User_ID")
+Collection<Vehicle> vehicale = new ArryaList<>();
+@ManytoOne
+@joinColumn(name = "User_ID" )
+User user = new User();
+
+Many to many --> this will create 2 relationship tables like Vehical_User_details and user_Vehical_details by defaults
+
+@ManytoMany  
+Collection<Vehicle> vehicale = new ArryaList<>();
+@ManytoMany
+Collection<User> users = new ArryaList<>();
+
+--> this will create one table USER_Details_Vehicle
+@ManytoMany --> will create the table
+Collection<Vehicle> vehicale = new ArryaList<>();
+@ManytoMany(mappedBy = vehicale)
+Collection<User> users = new ArryaList<>();
+
+
+Bag sementaic --> List / ArrayList
+Bag sementaic with id--> List / ArrayList
+List sementic --> List / ArrayList
+Set sementic --> Set / HashSet
+Map sementic --> Map / HashMap
+
+Cascade --> isted of saving each vehical in the database just save the user so that childern can save the automataically using cascade.
+@OnetoMany(cascade = CascadeType.PERSIST,MERGE,REMOVE,ALL)
+Collection<Vehicle> vehicale = new ArryaList<>();
+
+Session.persisit(User)
+
+-----------------------------------------------------
+Inheritence - By default the hibernate will implements single table strategy for hirarchy and it as type called Dtype actully it store the class name this is called discriminator type.
+Discriminator type. tells what kind of record who inserted this record
+
+@Inheritence(Strategy=InheritenceType.SingleTable)
+@DiscriminatorColumn(name="Vehicle_Type", discriminatortype =DiscriminatorType.String);
+
+@DiscriminatorValue("Bike") -- Bike class 
+@DiscriminatorValue("Car") -- 4Whealer class
+
+list normalised
+
+Table per Class -- strategy one table for one class
+@Inheritence(Strategy=InheritenceType.TABLE_PER_CLASS) -- this will create 3 tables for 3 classes and it will have all the column
+Seperate table for each class -- parent class properties will be created in child classes
+
+Discriminator is not needed. and they are in normlised class. no null vlaues or blank values. 
+It duplicate the common properties in all the tables means it will have all the properties for parent and child in all the child class.. this leads to duplcation of the columns
+
+Implementing Inheritance With Joined Strategy --> it will be much normalised way of using the inheritence.
+@Inheritance(strategy=InheritenceType.Joined)
+It will have the properties specific to the child class in the table and id from the parent
+Parent class will be having in one table.
+
+Hybernate Anotation - Configuring Collections and Adding Keys
+@GenericGenerator (name = "hilo-gen" , Strategy = "hilo")
+@CollectionId {@Column(name="Address_Id"), genrator="hilo" , type = @type(type ="long")}-- this is be used to create the prymary key in the child tables when we use value type objects 
+@NotFound(action= notfoudd.ignore) no such reletionship is not found
+
+----------
+
+CURD operation-- code to Create, Read, Update and Delete entities in the database
+
+session.save(Object);
+session.get(class, pk);
+session.delete(Object);
+session.update(UpdatedObject);
+
+Transient, Persistent and Detached Objects -- three important entity object states in Hibernate: Transient, Persistent and Detached.
+Transient object is not persisted means session object is not associated with the object
+session object is attached then it is called Persistent.
+Detached objects are the object which doesn't have session but it is detached from the session
+
+Object state
+
+  Transiant  -- session.save(), get() -->  Persistent ---session.close()   -->  Detached
+					<--delete() --
+special case of object state change: from detached to persistent.
+Got the object from db and it is persistence and then we closed the session and user updated the object and it should save the updates.
+then if we call session.update then it will attached the session and update
+
+
+ HQL and the Query Object insted of using the table names we use the class name and properties will be the column name
+ 
+ Query query = session.createQuery("from userDetails");
+  Query query = session.createQuery("from userDetails where userId > 5 ");
+  query.setFirstResult(5);
+  query.setMaxResutls(10)
+ List users = query.list();
+  select queries to retrieve only certain columns. paginations
+  
+   Query query = session.createQuery("select userName from userDetails");
+   Query query = session.createQuery("select new Map(userId,userName) from userDetails");
+	 Query query = session.createQuery("select  max(userId) from userDetails");				
+
+Parameter Binding and SQL Injection (?,?)
+   Query query = session.createQuery("from userDetails userId = :userId");
+   query.SetInterger("userId",5)
+  
+write and access named queries. We'll also write and execute a NamedNativeQuery.
+Best practice to have one common place to place all the queries. using named queries we can do this very easily.
+NamedQuery will allow to write queries on the entitiy level.
+@NamedQuery(name of the query, query itself)
+@NamedQuery(name="UserDetails.byId", query = "from userDetails where userId = ?")
+   Query query = session.getNamedQuery("select userName from userDetails");
+   
+@NamedNativeQuery(name, Query)
+@NamedNativeQuery("Navtive.Query", "Select * from USER_DETAILS where user_ID = ?" , restultClass = UserDetails.class);
+
+   Query query = session.getNamedQuery("Navtive.Query");
+   Run the stored procedure using the native queries also
+
+   Criteria API
+	Issue in named query -->very similar SQL and queries become complex and it goes 15 to 20 lines. it is difficult to change. It is still query language. parameter in constrain grow.
+	Criteria is like where cluses and will speicify the condition. we  configured the user_details table.
+	
+	Criteria criteria = session.createCtiteria(UserDetails.Class);
+	create.add(Restriction.eq("username","user 10"));
+		.add(Restriction.gt("userId",5)
+		.add(Restriction.like("userId","%"5)
+		.add(Restriction.between("userId",5,50) -- this will be adding all "and"
+		create.add(Restriction.or(Restriction.gt("userId",5),Restriction.gt("userId",10))); --> this will add or.
+	criteria.list();
+	
+Projections and Query By Example --  use Projections to fine tune the results of the Criteria API. We'll also use Query By Example (QBE) to easily specify multiple where clauses in a single example object.
+If i want to pull up only couple of coloumn not the entire table we will use projection.
+if we want to get the aggregation like max,Min,count etc
+If we want to ordered results
+
+	Criteria criteria = session.createCtiteria(UserDetails.Class)
+		.setProjection(Projections.Property("UserId"))
+		.order()
+
+If we have lot or properties or column in criteria then we can create a example object and encapsulate all the creiteria into the example object and run the query using that example
+
+UserDetails deatls = new UserDetails();
+deatls.setUser(5); // it will ignore the primarykey
+deatls.setUserName("user 10");
+
+Example example = Example.create(deatls);
+	Criteria criteria = session.createCtiteria(UserDetails.Class)
+		.add(example);
+		
+		It will ignore the null propertie and PK properies
+		
+		If we don't want to consider any one of the properies then we can exculed the properies
+		Example example = Example.create(deatls).exculed("");
+		.enabledLike();
+
+Cacheing in Hibernate - Hibernate's cache support: both first level (Session) and second level cache.
+First level class - Session level cache by default this is provided 
+Second Level class - Across the session  in an application, Across application, Across clusters (multiple application and all the application should use hibernate)
+Configuring Second Level Cache
+We'll configure EHCache as our second level cache, and then put it to work. We'll fetch an object across two sessions, and we'll see how Hibernate's second level cache comes into play to save a database query.
+Enable the second level cache in config file 
+<Property name = "Cache.use_second_level_cache> true </Property>
+<Property name="Cache.provider_class">org.hibernate.cache.EHCacheProvider</property>
+you need to download the cache provoders and add that in you classpath.
+Configure required entities as cacheble
+@Cacheable
+@Cache(usage=CacheConcurencyStrategy.READ_ONLY), READ_WRITE, TRANCACTIONAL, NON, NONRISTRICT_READ_ONLY
+
+Using Query Cache
+how to cache results that are fetched from the Query object.
+<Property name = "Cache.use_query_cache> true </Property>
+WE need to configure the query as cacheable
+   Query query = session.createQuery("select userName from userDetails");
+query.setCacheAble(true) --> where ever you call this query in the application
+
+
+
+		
+		

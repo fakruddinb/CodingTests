@@ -1,0 +1,34 @@
+superwise classification -- Superwise means some body will tran you .. it is called superwise learning
+
+learning from examples
+
+Features and lables
+input is features and produce a lables
+
+Scatter plot
+
+Decision surface
+
+Decision surface linear
+
+NAIVE BAYES
+
+train --> fit
+
+Bayes Rule -- is used for TEXT learning
+
+SVM -- Support vector m/c
+MAximises distance to nearest point = MARGIN
+Leaniear 
+Non Linear						kernels
+Karnel tric --> Non sepearable  ---->  Separables.
+OVER Fitting -- STOP
+
+Decision Trees
+
+K nearest neighbors
+adaboost
+randon forest
+
+https://www.youtube.com/watch?v=TdopVWltgqM&index=178&list=PLAwxTw4SYaPkQXg8TkVdIvYv4HfLG7SiH
+https://www.youtube.com/watch?v=gNkE3tFUFuw&list=PL0Smm0jPm9WcCsYvbhPCdizqNKps69W4Z

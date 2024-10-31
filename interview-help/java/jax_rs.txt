@@ -1,0 +1,22 @@
+Respource based URI
+Http Methods
+Metadata - Headers and response codes
+Message headers - Content types "response type"
+Content negotiation
+
+Idempotent
+POST - Create
+PUT - update
+
+GET
+DELETE
+
+Read Only method GET
+Write methods - POST PUT DELETE
+
+
+Repetetables Operation GET, DELETE, PUT - Idempotent methods
+NON Repetable operation POST - non idempotent
+
+is the propety of certain operation which doesn't change the effect on application.
+

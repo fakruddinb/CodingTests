@@ -1,0 +1,129 @@
+What is the relationship between SGML,HTML , XML and XHTML?
+
+SGML (Standard generalized markup language) is a standard which tells how to specify document markup. It’s only a Meta language which describes how a document markup should be. HTML is a markup language which is described using SGML.
+
+So by SGML they created DTD which the HTML refers and needs to adhere to the same. So you will always find “DOCTYPE” attribute at the top of HTML page which defines which DTD is used for parsing purpose.
+
+<!--!doctype-->
+
+Now parsing SGML was a pain so they created XML to make things better. XML uses SGML. For example in SGML you have to start and end tags but in XML you can have closing tags which close automatically (“”).
+
+XHTML was created from XML which was used in HTML 4.0. So for example in SGML derived HTML “
+” is not valid but in XHTML it’s valid. You can refer XML DTD as shown in the below code snippet.
+<!--!doctype--><!--!doctype-->
+
+What is HTML 5?
+
+HTML 5 is a new standard for HTML whose main target is to deliver everything without need to any additional plugins like flash, Silverlight etc. It has everything from animations, videos, rich GUI etc.
+HTML5 is cooperation output between World Wide Web Consortium (W3C) and the Web Hypertext Application Technology Working Group (WHATWG).
+
+If I do not put <! DOCTYPE html> will HTML 5 work?
+
+No, browser will not be able to identify that it’s a HTML document and HTML 5 tags will not function properly.
+
+Which browsers support HTML 5?
+Almost all browsers i.e. Safari, Chrome, Firefox, Opera, Internet Explorer support HTML 5.
+
+How is the page structure of HTML 5 different from HTML 4 or previous HTML?
+A typical web page has headers, footers, navigation, central area and side bars. Now if we want to represent the same in HTML 4 with proper names to the HTML section we would probably use a DIV tag.
+But in HTML 5 they have made it more clear by creating element names for those sections which makes your HTML more readable.
+Below are more details of the HTML 5 elements which form the page structure.
+
+    <header>: Represents header data of HTML.
+    <footer>: Footer section of the page.
+    <nav>: Navigation elements in the page.
+    <article>: Self-contained content.
+    <section>: Used inside article to define sections or group content in to sections.
+    <aside>: Represent side bar contents of a page
+	
+	What is datalist in HTML 5?
+
+Datalist element in HTML 5 helps to provide autocomplete feature in a textbox as shown below.
+Below is the HTML code for DataList feature:-
+<input list="Country">
+<datalist id="Country">
+<option value="India">
+<option value="Italy">
+<option value="Iran">
+<option value="Israel">
+<option value="Indonesia">
+</datalist> 
+
+What are the different new form element types in HTML 5?
+
+There are 10 important new form elements introduced in HTML 5:-
+
+    Color.
+    Date
+    Datetime-local
+    Email
+    Time
+    Url
+    Range
+    Telephone
+    Number
+    Search
+
+	Let’s understand these elements step by step.
+
+If you want to show color picker dialog box. <input type="color" name="favcolor">  
+If you want to show calendar dialog box. <input type="date" name="bday"> 
+If you want to show calendar with local time. <input type="datetime-local" name="bdaytime">  
+If you want to create a HTML text with email validation we can set the type as “email”. <input type="email" name="email">
+For URL validation set the type as “url” as shown in the below HTML code. <input type="url" name="sitename">  
+If you want to display textbox with number range you can set type to number. <input type="number" name="quantity" min="1" max="5"> 
+If you want to display a range control you can use type as range.<input type="range" min="0" max="10" step="2" value="6">
+Want to make text box as search engine box.<input type="search" name="googleengine">  
+What to only take time input.<input type="time" name="usr_time">  
+If you want to make text box to accept telephone numbers.<input type="tel" name="mytel">  
+
+What is output element in HTML 5? 
+Output element is needed when you need calculation from two inputs to be summarized in to a label. For instance you have two textboxes( see the below figure) and you want to add numbers from these textboxes and send them to a label.
+<form onsubmit="return false"  öninput="o.value = parseInt(a.value) + parseInt(b.value)">
+<input name="a" type="number"> +
+<input name="b" type="number"> =
+<output name="o" />
+</form>
+
+You can also replace “parseInt” with “valueAsNumber” for simplicity. You can also use “for” in the output element for more readability.
+Hide   Copy Code
+
+<output name="o" for="a b"></output>  
+
+Below is how the code of HTML 5. You can see the SVG tag which encloses the polygon tag for displaying the star image.
+
+<svg id="svgelem" height="[object SVGAnimatedLength]" xmlns="http://www.w3.org/2000/svg">
+<line style="stroke: rgb(255, 0, 0); stroke-width: 2px;" y2="[object SVGAnimatedLength]" x2="[object SVGAnimatedLength]" y1="[object SVGAnimatedLength]" x1="[object SVGAnimatedLength]">
+</line>
+
+
+What is canvas in HTML 5?
+
+Canvas is an HTML area on which you can draw graphics.
+<a a="" below="" body="" c="document.getElementById("mycanvas");" canvas="" complete="" ctx="c.getC>
+
+So how can we draw a simple line on Canvas?
+
+    Define the Canvas area.
+    Get access to canvas context area.
+    Draw the graphic.
+
+Define the canvas area
+So to define canvas area you need to use the below HTML code. This defines the area on which you can draw.
+<canvas height=""500"" id=""mycanvas"" solid="" style=""border:1px" width=""600""></canvas>  
+Get access to canvas area
+
+To draw on the canvas area we need to first get reference of the context section. Below is the code for canvas section.
+var c=document.getElementById("mycanvas");
+var ctx=c.getContext("2d"); 
+
+Draw the graphic
+
+Now once you have access to the context object we can start drawing on the context. So first call the “move” method and start from a point , use line method and draw the line and then apply stroke over it.
+<a name="WhatisthedifferencebetweenCanvasandSVGgraphics">What is the difference between Canvas and SVG graphics? </a>
+
+Here’s it’s like draw and remember. In other words any shape drawn by using SVG can be remembered and manipulated and browser can render it again.	Canvas is like draw and forget. Once something is drawn you cannot access that pixel and manipulate it.
+SVG is good for creating graphics like CAD software’s where once something is drawn the user wants to manipulate it.	Canvas is good for draw and forget scenarios like animation and games.
+This is slow as it needs to remember the co-ordinates for later manipulations.	This is faster as there is no intention of remembering things later.
+We can have event handler associated with the drawing object.	Here we cannot associate event handlers with drawing objects as we do not have reference of them.
+Resolution independent.	Resolution dependent.

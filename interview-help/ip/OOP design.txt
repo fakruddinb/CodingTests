@@ -1,0 +1,76 @@
+I would suggest following steps. 1. Write use case. It will help you to understand problem, it should contain basic execution flow (correct path) and alternate paths. 2. Do linguistic analysis and find out class and methods. (This is optional if you know any other good method then use it.) 3. Use SOLID principal for designing your classes. 4. Keep encapsulation, inheritance, polymorphism in mind. If you can't remember them write it on paper or stick it on your desk. 5. One more thing you should keep in mind "What varies encapsulate it". 6. Use design patterns when they are required. Don't enforce design pattern to your code. Try to map your design problem to any design pattern.
+
+
+Design an OO parking lot. What classes and functions will it have. It should say, full, empty and also be able to find spot for Valet parking. The lot has 3 different types of parking: regular, handicapped and compact.
+
+Here is a quick start to get the gears turning...
+
+ParkingLot is a class.
+
+ParkingSpace is a class.
+
+ParkingSpace has an Entrance.
+
+Entrance has a location or more specifically, distance from Entrance.
+
+ParkingLotSign is a class.
+
+ParkingLot has a ParkingLotSign.
+
+ParkingLot has a finite number of ParkingSpaces.
+
+HandicappedParkingSpace is a subclass of ParkingSpace.
+
+RegularParkingSpace is a subclass of ParkingSpace.
+
+CompactParkingSpace is a subclass of ParkingSpace.
+
+ParkingLot keeps array of ParkingSpaces, and a separate array of vacant ParkingSpaces in order of distance from its Entrance.
+
+ParkingLotSign can be told to display "full", or "empty", or "blank/normal/partially occupied" by calling .Full(), .Empty() or .Normal()
+
+Parker is a class.
+
+Parker can Park().
+
+Parker can Unpark().
+
+Valet is a subclass of Parker that can call ParkingLot.FindVacantSpaceNearestEntrance(), which returns a ParkingSpace.
+
+Parker has a ParkingSpace.
+
+Parker can call ParkingSpace.Take() and ParkingSpace.Vacate().
+
+Parker calls Entrance.Entering() and Entrance.Exiting() and ParkingSpace notifies ParkingLot when it is taken or vacated so that ParkingLot can determine if it is full or not. If it is newly full or newly empty or newly not full or empty, it should change the ParkingLotSign.Full() or ParkingLotSign.Empty() or ParkingLotSign.Normal().
+
+HandicappedParker could be a subclass of Parker and CompactParker a subclass of Parker and RegularParker a subclass of Parker. (might be overkill, actually.)
+
+In this solution, it is possible that Parker should be renamed to be Car.
+
+
+
+
+I am going to develop a Tic-Tac-Toe game using Java(or maybe other OO Languages). Now I have a picture in my mind about the general design.
+
+Interface: Player, then I will be able to implement a couple of Player classes based on how I want the opponent to be, for example, random player, intelligent player, etc.
+
+Classes: Board class, with a two-dimensional array of integers, 0 indicates open, 1 indicates me, -1 indicates opponent. The evaluation function will be in here as well, to return the next best move based on the current board arrangement and whose turn it is.
+
+Referee class, which will create instance of the Board and two player instances, then get the game started.
+
+This is a rough idea of my OO design. Could anybody give me any critiques please? I find this is really beneficial. Thank you very much.
+
+
+When I think of object structure, I think of my methods as doing one of two things:
+
+1) asking an 'object' a question
+
+2) commanding the 'object' to do something
+
+That being said, it doesn't make sense to me to ask the 'board' what the next best move is. The board should simply hold values and tell you about its state.
+
+I would probably have an object that is dedicated to determining the best next move for a given 'intelligence'. Let's call it the 'move_brain'. Then you can say, "hey move_brain, given this board and this level of intelligence, what's the next best move?"
+
+The board class as you have outlined it now has many responsibilities: holding state, allowing users to move, AND thinking about how to move next. That's too much responsibility.
+
+And after all that, I would say this: given that this program is not THAT massive, pretty much any solution will be okay. 

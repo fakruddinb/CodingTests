@@ -1,0 +1,119 @@
+		
+Jersy refernce implementation of JAX-RS and others as follows
+Rest easy
+Restlet
+Spring boot.
+Spring controller
+
+--
+@Path("message") -- path
+@GET, @POST, @DELETE  @PUT-- http method
+@Produces(MediaType.TEXT or MediaType.applaictionXML) -- output format
+@XmlRootElement on the top of the beans to convert to xml
+
+@GET
+@Path(/{messageId}) -- variable path
+@PathParam("messageId") String messageId -- To read the variable in the method param
+
+-- MessageBodyWriter -- JAXB is by defult and it convert object from or XML
+Jersy-Media-Moxy-- This is not by defult and it has to be inculeded as dependicy 
+
+@POST 
+@Consumes (media)
+@Produces (Media)
+
+@PUT
+@Path("Messageid")
+@Consumes (MediaType.JSON)
+@Produces (MediaType.JSON)
+@PathParam
+
+@DELETE
+@Path("id")
+@Produces
+@pathparam
+
+--- Query Parameter which is use ?query string
+@QueryParam
+--- Query Parameter which is use this ;param=value
+@MatrixParam(paramname)
+--- Header values authtication token
+@HeaderParam("paramName")
+------- Cookie value
+@CookieParam("name")
+----- capture using html form
+@FormParam
+
+
+----------- Generic params
+@Context UriInfo object -- this 
+@Context HttpHeader object has the  method about header parameter 
+
+-- Custom build params which will be created using the pojos with required params
+@BeanParam Customobject class which we have created for the param values
+Create a pojo and add all the required params like queryparam etc and use as one bean 
+
+--- Sub resources
+Is a resourece which has dependicy on a Main resource or 
+Like messages and comments one message might have multiple comments
+/messages/1/comments/3
+for a particular sub path we need write a method which will return the instance of the subResource in the main resource
+which in turn implement all the method in the sub resources
+
+--- Status code
+It is about response --> Add status codes or header info in the response
+By defult it always send 200 ok status
+we need to provide correct status code like if we are creating a resource we need to send the status as created and the URL in the header.
+We need to return the Response Object back. it can be created by using build method by seting required things.
+
+Response.setEntitiy(Object we are sendign in response)
+		.uri()
+		.created
+		.build()
+
+get UriInfo from @Context and build the uriinfo object with the proper ids or anything you want to send it to location object
+
+
+Error handling..
+Create Exception class
+
+Create a CustomExceptionMapper class extending the ExceptionMapper from jax rs class and implement toResponse method and build the response.
+you should use @Provider anatoations to register and jax rs as exception handling class
+
+Create one generic exception mapper so that it can be mapped with throable and implement toResponse method
+
+WebApplicationException provided by jaxrs to handle the exception and it has subclassess like 
+NotFoundException etc
+
+HATEOAS
+Add links to the response objects
+like self and child links
+Enhance the model by adding the list of links in your response pojo object
+New class called Link  with the link and releation
+Link to self and links for other dependency
+This can be done by taking UriInfo from the context
+and build by seting path with the resource class
+if you have sub resource then build by using path method which takes class and method name as param 
+and set the value in the url and add it to the resource pojo in case of sub resource use ResolveTemplate which takes 2 param the name and value
+
+Also we have a class called Link in jaxrs we can use that alos...
+
+Content negotiation
+Request and response format
+JSON and JSON
+Client ask the content using the header and it is called accept header
+Accept : text/xml
+@produces can have array of content types we can do this both at the class level and also method levels
+
+Content type header for consume messages
+@Consumes
+
+
+
+--- Spring anatoations
+
+@RequestMapping(value = "{requestpath}", method ="GET" or "POST", Produces = ContentType.TEXT/XML, consumes = "Media")
+@ResponseBody -- ResponseEntity object
+@PathVairable - value or variable sent on the as a path
+
+@RequestBody -- Payload

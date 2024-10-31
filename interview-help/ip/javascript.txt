@@ -1,0 +1,347 @@
+Java script is based on MDN mojilla developer network
+is a light waight interpeterd object oriented language with first class functions and it is best know as scripting language for web pages but it is used in many non browser enviroment as well
+lightweight -> small memory footprint, easy to implement
+interpeterd -> no compilation. instruction executed directly.. there is a compilation but not like java C++
+object oriented -> modeled around object
+first class functions -> functions can be used as value, fuctions as parameter of the functions
+Scripting language -> instruction written for execution
+
+Why to learn
+
+History of java script - created by branden eich at netscape
+created to complement for java language
+Designed to easy
+standised to ECMA. now we have ecma 6
+
+use firfox scrach pad
+Variables and values
+var is used to diclare a variable
+number is double type variable
+No int,char varaiable type
+It is loose typing or week typing it means we can define any variable type any value
+String
+boolean
+undefind
+Declaration and defination
+Var decalare;           decalare = "definaed"
+In JS when a variable is declared there is an implicit value is assinged to it and it is called undefined
+Type undefined value has only one value called undefined
+null - it is js type .. It has only one value which is null you need to explisitly assign null value
+Difference between undefined and null-- > these both are non value
+Undifined is not defined or alloacated value. once you need to assign a value but you dont know value to null;
+Symbol- datatypes --> it is like enumaration
+
+Variables and values can be "interrogated"
+It is imporatent to find what kind of variable type before using it. as it can apply for any type.
+This can be done using type of operator
+typeof value
+typeof variable
+typeof null is object --> this is bug in java script. it should be null but this is carried over
+Type Coercion and the === operator
+Automatic type conversion called type coercion.
+123 + "4" --> 1234
+== type convert and compare
+= is assinment operator
+=== --> write way of compare and take a place of == without type conversions
+0 --> false
+and all non 0 is --> true
+String is empty --> false and true for all the values
+undefind ==> false
+null --> false
+flexible with typing
+Values of all the types are assocated boolean value
+Always use === so that it can compare type values without type conversion
+
+Objects in java script. It is not class base OO --> it is not create a class first template etc.
+there is no predifined strutcture and behaves like a map --> prop :: value
+Creating object -- inline
+var obj = {} --> empty object
+obj.prop = "Valueoftheobjec" --> defined or added a property by name prop to the object with value is Valueoftheobjec
+obj.prop2 = 35 --> defined or added a property by name prop2 to the object with the value 35.
+Creating object -- by adding the properties before creating it.object literal notation to create and initialize objects.
+var obj = {
+	"prop" : "Valueoftheobjec",
+	"prop2" : 35
+} 	
+obj.prop;
+No access specifier: private or public --> all the properties are accessible
+if you access is not belongs to class --> doesn't throw error and it says gives undefind
+you can have methods in objects
+The dot and bracket notations --> square bracket notation, another way of accessing object properties
+one more way -- using square breakts obj["prop"]
+differences between the dot notation and the bracket notation to access object properties. And when to use what?
+you cann't have properties name that start with number. you can not access using the . notations and here we can use [] notation
+if invalid properties -- use []
+if propties names are dynamic. ie if the property name is value of the other propterty
+Nested Objects -- >Objects can be nested within other objects. Here's how.each object has memroy location allocated for object; 
+Revisiting === 
+Revisiting undefined vs null for objects if it is not defined then undefined and if it is defined and value is null then it is null
+Deleting attributes with the delete operator
+to remove the property is prop - undefind this will have the prop but value is undefind
+delete propname --> to delete the object property
+
+Introducing Arrays -- arrays in JavaScript and how you can create and access array elements
+var myArray = [1,2,3,4,5]
+myArray[0] --> 1
+myArray[4] --> 5
+myArray[5] --> undefined
+myArray[5] = 6;
+you'll learn about the secret behind JavaScript arrays. And what you learn may surprise you. Just don't tell anyone!
+find the lenght of the array --> myArray.lenght --> 5 -- it is not the length of the array it is the last index number +1
+every js array is an object-- the object properties names are 0,1,2, etc and we can add any name to the properties
+like myArray[foo] = "value";
+
+Wrapper Objects -- > JavaScript creates wrapper objects for some simple primitive types.
+is string is primitive --> string.lenght = 10 --> it is an object
+So java script has equivilent object for primitive
+string will have String object -- it takes the primitive and it will wrapper into string object when you call the properties on the primitive
+
+Introduction to Functions
+function sayHello(){
+console.log("This is function");
+}
+sayHello();
+Flexible argument counts
+we can supply as many number of arguments to the functions means if function is expecting 2 argument then you can pass 1 or 3 --> if we pass one all other are undefind if we pass more then more are ignored
+no function overloading in js based on the number of parameter of the function
+return values to the caller from a function --> it will return an explisit value if we return a value if function is not returning anything then it will return undefind
+Function Expressions --> functions are first class values in js
+var f = function foo(){
+	console.log("function assinged to variable");
+}; --> has a semicolon
+f(); --> this will execute the above function
+
+Anonymous Function Expressions --A very popular pattern when creating function expressions in JavaScript is to make the functions anonymous
+var f = function (){ --> no function name
+	console.log("function assinged to variable");
+};
+Functions as arguments -- > functions being first class values, they can be passed as arguments to other functions
+
+var exeuter = function(fn){
+	fn();
+};
+exeuter(f);
+
+Functions on Objects --  create 'object methods' by creating functions as object properties..
+
+myObj.myMethod = function (){
+	console.log("thi is sht objec");
+}
+myObj.myMethod();
+Understanding the this keyword --> how to access the 'self' reference on the object by using the `this` keyword
+this is used to refer the same instance when we use the varaiable in methods definded in the objects
+
+Default function arguments - JavaScript functions have implicit function arguments that you get for free. We'll learn about them, especially the `arguments` argument
+arguments --> is the implicit argument array we can get those argument and maniplate.. It is not an array but act as an array and we canot call all the methods of array on this object
+this --> 
+
+Array Methods --> some in-built objects starting with Arrays. We'll revisit Arrays with our knowledge of functions, and look at some of the built-in functions of Array objects.
+Arrays -- are objects -- few methods myArray.push(500); , pop() --> from the end of elements , shift(), unshift()-- from the begin
+forEach(function) - Array for each Method -- the powerful forEach function of Arrays. We'll learn how to use this function to iterate and process array elements
+first argument will be item, index and array itself
+Other objects -->explores the powerful forEach function of Arrays. We'll learn how to use this function to iterate and process array elements
+Math object, Date object
+
+-- Scopes and closers
+-- Objects and Prototypes
+-- Asyn Javascript
+-- Client side programs.
+
+JavaScript functions, including function declarations and function expressions
+Variable scope -- Java script is not block scoped
+Js has functional scope.. and the variable defined in the function cann't accessible outside the function
+JavaScript functions, including function declarations and function expressions
+JavaScript pattern called IIFE leverages function scoping to prevent global variables.
+we might have same name for the function in the code. So if we want to execte the intented function then we will do immediatly invoke fuction expresession
+
+(function (){
+
+})();
+
+Read and Write operations
+read operation needs varaiable decalaration
+write operation doesn't require variable to be diclareed
+global object that exists in browser environments called the window object. Also, how every global is a property of it.
+All the variable or properties are created on window object and same as functions
+
+Compilation and Interpretation --> this is both compile and interpreted
+In Compilation step js will identify the varaibles and assign variables to proper scope
+interpretation step when it allocates values to variable
+need to be careful while guessing the value or read operation before going throug the entire code
+Hoisting -> in js is process of compilation like identifying the varaibles and scoped
+vairables hoisted to the top -- it works both for function and variables
+the hoisting happens only for function diclaration and not work for function expressions
+JavaScript engine by using strict mode. You'll be happy you did!
+normal mode and strict mode - optin future
+use strict -> js run in strict mode and it can be applied for fucntion or global
+
+Closures --> fairly simple and they are every whare
+--------------------------
+var a = 10;
+function outer(){
+	var b = 20;
+	
+	function inner(){
+		console.log(a);
+		console.log(b)
+	}
+	inner();
+}
+outer();
+--> 10 20
+var a = 10;
+function outer(){
+	var b = 20;
+	
+	var inner = function (){
+		console.log(a);
+		console.log(b)
+	}
+	return inner;
+}
+var innerfn = outer();
+innerfn(); --> 10 20
+
+when the function object is created it remembers the scope at that point and it means the function knows the scope of the varaiable around it.
+it has snapshot and pointing to the same vairables and it does not create a copy of vairables
+A function which remembers it scope. it remembers during the time of declaration
+var a = 10;
+function outer(){
+	var b = 20;
+	
+	var inner = function (){
+		console.log(a);
+		console.log(b)
+	}
+	return inner;
+}
+var innerfn = outer();
+innerfn(); --> 10 20
+And it will create a new vairables every time it invokes a function and that is the state of the scope rememberd by the function object when we created
+
+var a = 10;
+function outer(){
+	var b = 20;
+	
+	var inner = function (){
+		a++;
+		b++;
+		console.log(a);
+		console.log(b)
+	}
+	return inner;
+}
+var innerfn = outer();
+innerfn(); --> 11 21
+
+var innerfn2 = outer();
+innerfn2(); --> 12 21
+
+closures in callbacks --One of the prominent uses of closures (that we do and don't even recognise it) is when we use callbacks in JavaScript.
+var a = 10;
+
+var fn = function (){
+	console.log(a);
+}
+
+setTimeout(fn, 1000);
+console.log("Done");
+--> Done and 10 -- here the setTimeout will wait the for 1 sec before it execute a function.
+one of the importent point here is that we don't know the setTimeout function where it exit or in what scope and how this will know the var a. 
+this is the typical example of closuers. the when function variable is created then it remembers the snapshot of variable at the time of its creation.
+
+The Module Pattern --The module pattern is a clever way to use closures to create private and public properties of an object (JavaScript doesn't provide that by default).
+in js there is no private and public .. this can be done by creating a set and get clousers
+
+var person = {
+	"firstName" :"pakuru",
+	"lastName" :"baba",
+	"getFirstName" : function(){
+		return this.firstName;
+	}
+	"getLastName" : function(){
+		return this.lastName;
+	}
+} 
+
+if i access this object you can very esaly access it print all the values but we dont want to give acess to variable in the objects and this can be done by clousers
+this is done by scope management. as it is said the outer scope can not acess inner scope and the scope can be introduced using the fucntion
+
+function createFunction(){
+	return var retunobj = {
+	"firstName" :"pakuru",
+	"lastName" :"baba",
+	"getFirstName" : function(){
+		return this.firstName;
+	}
+	"getLastName" : function(){
+		return this.lastName;
+	}
+} 
+
+var person = createFunction();
+console.log(person.fristName); --> will print the firstname and we need to make this not accessible
+
+function createFunction(){
+	var firstName = "pakuru";
+	var lastName = "baba";
+	return var retunobj = {
+		"getFirstName" : function(){
+			return firstName;
+		}
+		"getLastName" : function(){
+			return lastName;
+		}
+		"setFirstName" : function(name){
+			firstName = name ;
+		}
+		"setLastName" : function(last){
+			lastName = last;
+		}
+	} 
+}
+
+var person = createFunction();
+console.log(person.fristName); --> will print the undefind it is not accessible cus the it is not in the return scope
+console.log(person.getFirstName) --> will print the name
+
+Closures In async Callbacks..
+You can write a lot of callback functions without thinking about closures. But not when you are doing asynchronous callbacks! Learn why sometimes things may not work like you would expect!
+var i;
+
+var print = function(){
+	console.log(i);
+}
+
+for(i =0; i<9 i++){
+ setTimeout(print, 1000);
+}
+This will print value 10 in 10 times. cus it will be registering the setTimeout function 10 times and when it start execute the print function after 1 sec the value of i is 10 as we know clouusers it is rememberd the last value when it is executing the function that is 10
+we learnt how async callbacks have the potential of dealing with modified data. We will now learn how to preserve data in closures so that the right data gets to the right function call.
+to fix the issues 
+
+for(i =0; i<9 i++){
+ (function(valueofi){
+	setTimeout(function(){
+	console.log(valueofi),
+}, 1000);})(i);
+}
+
+JavaScript Objects and Prototypes In-depth
+creating an objects in js
+var obj = {} --> inline blank  or empty object
+create object using function and it is called construction function
+function createFunction
+Difference between regular functions and constructors
+when you write a construction function start the function by capital letter.. which are you are using to create objects
+ what happens if you call a regular function using the `new` keyword and a constructor functions without it.
+ It works but it is not advisable to do it
+ 4 ways we can execute the methods
+ The this argument values
+ execution contaxt. based on the calling function context the "this" refers to the contaxt object
+ Working on objects with this reference
+ explore the this reference values. And also highlight a limitation with the implicit this reference values.
+ every function has differenent this refrence wether it is outer or inner
+ Using the call function
+ o control the value of the this reference using the "call" function
+

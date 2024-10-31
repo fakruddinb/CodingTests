@@ -1,0 +1,158 @@
+General concepts of Security
+
+Authenticate : who are you , id, account (userid and account) 
+Types of Authentication 
+- knowledge based authenitication - User can imparesanate by stealing the password 
+- Possation of based authenication, phones - sending some text, key card Phone
+- Multifactor authenication (knowledge and possation based)
+
+Authorization : what do you want, can user do or allowed to do, resource or access right
+After authentication - we need to autherize user based on the person
+
+Prinicipal: Is currently logged in user, identified as a user.
+Authority(Permission) or Granted Autherisation : Each user will have fine grain permission. the permission will define authority
+Role -> group of authority or Group of Permission, corse grananed authority
+
+What is Spring Security? 
+Spring Security is a powerful and highly customizable authentication and Autherisation framework. It is the standard for securing Spring-based applications.
+
+How does Spring Security work? 
+Spring Security provides comprehensive security services for Java EE-based enterprise software applications. 
+It handles authentication and authorization at both the web request level and the method call level.
+
+As soon as you add the Spring security dependency, In pom and run the app it will add security by default
+maven depencncy - spring-boot-starter-security
+secutiry is applied, as soon as we run using the above dependency 
+By default it will add filters responsible for throwing a login page and with all validataion which takes user and password 
+
+By default --
+adds mandatory authentication for URL's
+adds login form and handles the login error
+It adds a user called "user" and check the console for password
+Using generated security password: 69e8bd80-dc7e-46a4-9aac-80636811a59a
+
+We can create user and password properities files
+spring.security.user.name = user
+spring.security.user.password = pass
+
+What is a SecurityContextHolder in Spring Security? 
+The SecurityContextHolder is where Spring Security stores the details of the authenticated user. 
+The SecurityContext includes details of the principal currently using the application.
+
+you can logout the session by using /logout path
+
+What is @EnableWebSecurity in Spring Security? 
+The @EnableWebSecurity is a marker annotation. It allows Spring to find (via classpath scanning) and automatically apply the class to the global WebSecurity.
+
+How to customize authentication logic in Spring Security? 
+You can customize the authentication logic by implementing your own AuthenticationProvider or by extending DaoAuthenticationProvider and overriding the additionalAuthenticationChecks() method.
+
+we can have multiple AuthenticationProvider in one application and manage all those provider with the authenication manager object
+AuthenticationProvider will have 2 methods authenicate() and supports()
+they need access the identity store and verify the user this can be done using UserDetailsService has UserDetails object
+
+How to handle session management in Spring Security? 
+Spring Security provides automatic session management where it will create a new session when a user is authenticated. 
+You can customize session management rules by configuring SessionManagementConfigurer.
+
+@EnableWebSecurity
+Configuration of spring security or Authentication via AuthenticationManager
+
+Security configuration class extends WebSecurityConfigurarAdapter
+and override these methods for authentication
+public void configure(AuthencationManagerBuilder Authentication) 
+authenication.inMemoryAuthenticate
+
+getPasswordEncoder()
+
+for authorisation with HTTPSecurity
+public void configure(HttpSecurity httpSecurity)  
+httpSecurity.autheriseRequest().antMatcher("path").hasRole("ROLE").and().formlogin;
+
+-- new implementaion
+We would configure and create following beans
+SecurityFilterChain -- which takes the HTTPSecurity and create a SecurityFilterChain object
+WebSecurityCustomizer - for the request that should be ignored or pass without authenication 
+DaoAuthenticationProvider - Create the and configure any type of Provider
+AuthenticationManager- Create authenication manager object using AuthenicationConfiguration object
+								Header					Payload 					Signature
+JWT - jason web token - token + signing algarathim : user info with all the roles :  Signature (verifies the identity and temparing of the information)
+
+What is JWT? 
+JWT stands for JSON Web Token. It's a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.
+
+How does JWT work? When a user logs in, the server generates a JWT that contains the user's information and sends it to the user. The user will then send the JWT in the header for every subsequent request. The server verifies the JWT sent in the header and if it's valid, processes the request.
+
+What is the structure of a JWT? A JWT typically consists of three parts: Header, Payload, and Signature. The header typically contains the type of the token and the signing algorithm. The payload contains the claims or the pieces of information being passed about the user and any metadata. The signature is used to verify that the sender of the JWT is who it says it is and to ensure that the message wasn't changed along the way.
+
+Why use JWTs? JWTs can be used for Authentication and Secure Information Exchange. They provide a way of maintaining session information on the client side, instead of doing it on the server. This makes applications more scalable and efficient.
+
+Are JWTs secure? JWTs can be signed using a secret or a public/private key pair. So, as long as the secret or private key is kept safe, a JWT can be verified to ensure it is trusted and unaltered. However, the information in the payload can be base64 decoded and read. So, sensitive information should be encrypted or not included in the JWT.
+
+How to handle JWT expiration? The expiration of JWT is usually handled by setting the 'exp' claim of the token payload to a future timestamp. Once a token is expired, it is no longer valid and the user will need to authenticate again to get a new token. Refresh tokens can be used to obtain a new JWT without requiring the user to authenticate again.
+
+session token - save the session id in cookie - refreance to token
+
+3 parts -- header.payload.signature
+payload - base 64 encoded 
+header - how this is being signed, like algarathim and type etc
+Signature - it is for the server to validate, only server can verify as it is produced, the server will have secret key which is used to create the token.
+So avoid adding the password and other sensitive info in payload.
+
+Pass JWT in header 
+JwT as bareare
+Visibility
+Stealing -- transmiting is crusual - OAuth
+blacklist JWT
+
+OAuth 2.0 - ment for autherise, Autherise between services.
+valet key -- key with limited access
+OAuth access token - contans user-allowed permission, Trustable (cannot be tampered)
+OAuth flows - Terminologies
+Resource - Protected resources (photos on the google drive)
+Resource Owner - User - An entity capable of granting an access the resources
+Resource Server - Google drive
+Client - Application which neds ther resources and maeing a protected request on behalf of the resource owner and with it authorisation
+
+
+OAuth (Open Authorization) is a protocol that allows an application to authenticate against a server as a user, without needing to store the user's password. OAuth flows are the processes that handle how the authentication and authorization is managed. There are several types of OAuth flows:
+
+Authorization Code Flow: This is the most common flow, typically used by server-side applications. In this flow, the client redirects the user to the authorization server to authenticate. After authentication, the user is redirected back to the client with an authorization code. The client then exchanges this code for an access token.
+
+Implicit Flow: This flow is typically used by client-side applications (like single page apps) where the access token is returned immediately without an extra authorization code exchange step. It's less secure than the Authorization Code Flow.
+
+Resource Owner Password Credentials Flow: In this flow, the user provides their service credentials (username and password) directly to the application, which uses these to obtain an access token from the service. This flow is less common and is typically used only by trusted applications, as it involves sharing sensitive user credentials.
+
+Client Credentials Flow: This flow is used when applications want to access service resources, not on behalf of a user, but on behalf of the application itself.
+
+Device Code Flow: This flow is used when the client device has limited input capabilities. The device requests a code from the authorization server, and the user is asked to enter this code on a secondary device (like a smartphone).
+
+Refresh Token Flow: This flow is used to get a new access token when the current one expires. The application uses a refresh token (obtained during the original authorization code exchange) to get a new access token.
+
+Remember, the choice of OAuth flow largely depends on the type of your application (web, mobile, desktop, single page app, etc.) and its specific requirement
+
+
+who has the burden of security?
+Resource Server - Google drive
+
+Flow 1
+Client will ask permission to access the resource autherisation server
+autherisation server go to resource owner
+
+Auth token 
+Access token - key
+
+
+
+Flow 2 - implecit flow
+Client will ask permission to access the resource autherisation server
+autherisation server go to resource owner
+
+Access token
+
+
+Scalable
+
+docker, kubernates 
+
+versioning

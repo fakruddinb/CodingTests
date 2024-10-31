@@ -1,0 +1,57 @@
+https://www.youtube.com/watch?v=aJ41Qy-FEtM
+https://www.youtube.com/watch?v=-dKIL94R0dw&list=PLY91jl6VVD7wTjtBS_SNimfYUebxoHFjH
+
+
+Requirement:
+
+Create an interactive graphical charts for the data , user pleasing or good looking graphical diagrams to 
+
+Plotly is a free and open-source graphing library for Python.
+Plotly provides online graphing, analytics, 
+and statistics tools for individuals and collaboration, 
+as well as scientific graphing libraries for Python, 
+R, MATLAB, Perl, Julia, Arduino, and REST.
+
+Plotly allows you to generate graphs offline and save them in local machine. The plotly. offline. plot() function creates a standalone HTML that is saved locally and opened inside your web browser.
+
+
+https://plotly.com/dash/
+
+Dash apps go where traditional BI cannot... NLP, object detection, 
+predictive analytics, and more. 
+With 1M+ downloads/month, Dash is the new standard for AI & data science apps.
+
+http://10.190.65.92:8888/unified-console.html#
+
+A no-code interface for building charts quickly
+A powerful, web-based SQL Editor for advanced querying
+A lightweight semantic layer for quickly defining custom dimensions and metrics
+Out of the box support for nearly any SQL database or data engine
+A wide array of beautiful visualizations to showcase your data, ranging from simple bar charts to geospatial visualizations
+Lightweight, configurable caching layer to help ease database load
+Highly extensible security roles and authentication options
+An API for programmatic customization
+A cloud-native architecture designed from the ground up for scale
+
+FakruBaDayiBel1
+
+https://iplocate.xyz/
+12.12.12.12
+
+Steep learning curve for non front-end engineers
+
+Deal with a huge dataset and millions of rows. Plotly Dash integrates datashader to work with big data visualizations.
+
+SELECT * FROM insourced_ue_ookla_speedtest_android WHERE __time >= CURRENT_TIMESTAMP - INTERVAL '1' DAY
+
+
+https://stackoverflow.com/questions/49163520/mapbox-render-large-dataset
+
+https://github.com/zapr-oss/druidry
+
+https://stackoverflow.com/questions/49163520/mapbox-render-large-dataset
+
+npx create-react-app
+
+
+npm install react-plotly.js plotly.js --save

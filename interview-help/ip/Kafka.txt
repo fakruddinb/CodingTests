@@ -1,0 +1,64 @@
+
+Message Broker: Kafka
+https://www.youtube.com/watch?v=ArUHr3Czx-8
+https://www.youtube.com/watch?v=udnX21__SuU&list=PLkz1SCf5iB4enAR00Z46JwY9GGkaS2NON&index=3
+
+Kafka is fast for a number of reasons. To name a few.
+
+    Zero Copy - See https://en.wikipedia.org/wiki/Zero-copy basically it calls the OS kernal direct rather than at the application layer to move data fast.
+    Batch Data in Chunks - Kafka is all about batching the data into chunks. This minimises cross machine latency with all the buffering/copying that accompanies this.
+    Avoids Random Disk Access - as Kafka is an immutable commit log it does not need to rewind the disk and do many random I/O operations and can just access the disk in a sequential manner. This enables it to get similar speeds from a physical disk compared with memory.
+    Can Scale Horizontally - The ability to have thousands of partitions for a single topic spread among thousands of machines means Kafka can handle huge loads.
+
+	
+Message --> small and medium sized piece of data --> 	
+Producer --> is an application responsible for sending the messages or data to the kafka broker or server. It might be a line from the text file or the row or rows of records from data base. 
+Consumer --> is an application that recives data from kafka broker and the application which request data from the kafka is a consumer
+Broker --> is a kafka server and act as a message broker between producer and consumer
+Cluster --> group of computers acting for the single porpose. each exucting one kafka broker
+Topic --> topic is a unique name given to the data set or stream where data is send to the broker by producer to that topic and consumer will ask data from the same topic name. It is a common name or address given or registerd in the kafka server 
+Partitions --> kafka will brake a topic into partitions and they store that partitioned data in the vairous distibuted computers and the decision to make the partitions will be taken by the topic creater.
+Offset --> 
+Consumer groups -->  consumer form a group to share the task, --> A group of consumer acting as a single logic unit
+
+Partition and consumer group is tool for scalability --> it avoids the double reading of the partition
+
+Global unique identifier of message --> Topic Name + partition No + offset
+
+Kafka --> Uses Zoo Keeper -- used to provide the co-ordination services means since we have distibuted system and lot of borkers we need a co-ordination
+So before we start kafka broker we need to start a zookeeper
+
+Start the zookeeper-server from the bin folder and in case of windows go to windows folder
+zookeeper-server-start config/zookeeper.properties
+note down the port used to run the zookeeper
+
+Start the server using the below commond
+kafka-server-start config/server.properties
+
+Now create a topic --> when you start the defult topic is automatically created and we can use tool to create a topic.
+kafka-topics --zookeeper localhost:2181 --create --topic MyfirstTopic1 --partitions 2 --replication-factor 1
+
+We need to create a console producer to send a message
+kafka-console-producer --broker-list localhost:9092 --topic MyfirstTopic1
+you send a messages here or produce a message 
+
+
+then we need to create or start the console consumer
+kafka-console-consumer --bootstrap-server localhost:9092 --topic MyfirstTopic1
+you will see the messages reached at consumer.
+
+replication factor -- 3 resonable 
+leader and Follower
+
+Now we need to create the real time producers using producer API.
+we can use kafka to solve complex data integration problems and 
+we can use to create series of validataions, transformation and build complex data pipelines or 
+we can use it record the information to later consumption for ex: recording playlist
+or we can use it to log transaction and create application respond in real time and 
+we can also use to collect data from moblile phones or smartphoes etcs in a iot application
+Asyncronous comminucation for all the above uses cases
+
+we need a producers which send data to kafka.
+The most common methods to produce kafka producer is using kafka api
+
+

@@ -1,0 +1,53 @@
+Username: SRVC_TTS2_RPT
+Non-prod password: rPKjBwk+tcaajQ==
+Prod password: B3fXSvsO9rRtKA==
+
+Non-prod host: https://wna06160.us-west-2.privatelink.snowflakecomputing.com
+Prod host: https://yva20138.us-west-2.privatelink.snowflakecomputing.com
+
+
+spring:
+  datasource:
+    address: localhost
+    port: 3306
+    database_name: tower_temperatures
+    url: jdbc:mysql://tts-wireless-ops-new-p.czrah0tctrdi.us-west-2.rds.amazonaws.com:1433/tower_temperatures
+    username: tower_temp_read_prod_user
+    password: ToweRPrdeDRdUsr07
+    hikari:
+      connectionTimeout: 20000
+      maxLifetime: 900000
+      maximumPoolSize: 5
+  jpa:
+    open-in-view: false    
+    hibernate:
+      naming: 
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+  redis:
+     cluster:
+       nodes:
+        - clustercfg.microservice-cache-test.2rxnyl.memorydb.us-west-2.amazonaws.com:6379
+       maxRedirects: 2      
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    com.dish.wireless.noc: INFO
+    org.hibernate: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+#Database snowflakes
+snowflake:
+  account: yva20138
+  warehouse: QRY_WH
+  database.name: DISH_MNO_DL
+  schema: IMS_5G
+  username: SRVC_TTS2_RPT
+  region: us-west-2
+  password: B3fXSvsO9rRtKA==

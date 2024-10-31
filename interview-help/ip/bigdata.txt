@@ -1,0 +1,82 @@
+Campanion object 
+Factory method
+
+Tuple
+
+
+
+Platform: Spark, 
+
+Hadoop -- https://www.youtube.com/watch?v=xWgdny19yQ4
+Job Tracker -Task tracker
+Data node	- DAta node
+
+Language: Scala, Java, Python
+Libraries: MLLib, H2O 
+Compiler: SBT
+Approach: Streaming
+
+
+
+Message Broker: Kafka
+
+ETL:Talend
+
+amazon EC2
+
+
+
+
+https://github.com/HariSekhon/nagios-plugins
+
+NoSQLDB: Cassandra/MongoDB
+https://academy.datastax.com/planet-cassandra//cassandra
+https://github.com/doanduyhai/Cassandra-Spark-Demo/tree/master/src/main/scala
+
+Indexing: Solr
+starting, Creating the core, configuring the solr config file and data-config.xml based on the data dump.
+Skhema file to add the fileds and unique key. quring the data using solr
+
+solr start
+
+solr create -c name
+
+
+
+
+
+BI: Tableau/JasperSoft 
+
+Gretchen-Sanchez
+
+swatski+michael
+
+Julian-Sanchez
+
+General purpose map engine
+
+Processing the data ..
+map reduce --> Spark is very easy . Api are well design
+
+stream processing.. -- rescoring the model
+
+Pridiction business process
+
+Map reduce --- has its own use
+
+Document indexing
+
+https://github.com/DhruvKumar/spark-twitter-sentiment/tree/master/src/main/scala/com/dhruv
+
+
+
+
+libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "1.0.2"
+
+libraryDependencies += "org.apache.kafka" %% "kafka" % "0.8.1.1"
+
+libraryDependencies += ("com.datastax.spark" %% "spark-cassandra-connector" % "1.6.0-M1").exclude("io.netty", "netty-handler")
+
+libraryDependencies += ("com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0").exclude("io.netty", "netty-handler")
+
+libraryDependencies += ("org.apache.spark" %% "spark-streaming-kafka" % "1.6.0").exclude("org.spark-project.spark", "unused")

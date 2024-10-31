@@ -1,0 +1,52 @@
+
+·         Looking for a mid-level software engineer who is high potential.
+
+·         Must have fundamentals of algorithms and data structures.
+
+·         Experience with Big Data / Real-time Data is highly desirable.
+
+·         Skills required: Scala, Hadoop, HBase, Casandra, Spark, Flink, Kafka, Nifi, Kylo, Samza
+
+
+sbt compile
+
+sbt package
+
+// this is for linux based
+spark-submit --class "MySparkObject" --master local C:/tools/bigdata/projects/sbtproj/target/scala-2.11/sbt-example_2.11-1.0.jar
+
+spark-submit --class MySparkObject --master local C:/tools/bigdata/projects/sbtproj/target/scala-2.11/sbt-example_2.11-1.0.jar
+
+spark-submit --class com.baba.MySparkObject --master local --jars C:/tools/bigdata/projects/sbtproj/target/scala-2.11/sbt-example_2.11-1.0.jar
+
+// this is for windows based
+
+spark-submit --class com.baba.MySparkObject --master local C:\tools\bigdata\projects\sbtproj\target\scala-2.11\sbt-example_2.11-1.0.jar
+
+
+spark-submit --class com.baba.SparkObject --master local C:\tools\bigdata\projects\KafkaSparkCassandra\target\scala-2.10\cassandra-kafka-streaming_2.10-1.0.jar
+
+resilient distributed dataset (RDD), which is a fault-tolerant collection of elements that can be operated on in parallel.
+
+There are two ways to create RDDs: parallelizing an existing collection in your driver program, or referencing a dataset in an external storage system, such as a shared filesystem, HDFS, HBase, or any data source offering a Hadoop InputFormat.
+
+RDDs can be created
+    using parallelized collections
+    external datasets (local file system, HDFS, s3 etc)
+
+
+spark-submit --class com.baba.producer.SparkStreaming --master local C:\tools\bigdata\projects\bigproject\target\scala-2.11\bigproject_2.11-1.0.jar
+
+libraryDependencies += "org.apache.spark" %% "spark-core" % "1.6.0" % "provided"
+
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.6.0" % "provided"
+
+libraryDependencies += "org.apache.spark" %% "spark-streaming" % "1.6.0" % "provided"
+
+
+libraryDependencies += ("com.datastax.spark" %% "spark-cassandra-connector" % "1.6.0-M1").exclude("io.netty", "netty-handler")
+
+libraryDependencies += ("com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0").exclude("io.netty", "netty-handler")
+
+libraryDependencies += ("org.apache.spark" %% "spark-streaming-kafka" % "1.6.0").exclude("org.spark-project.spark", "unused")
+

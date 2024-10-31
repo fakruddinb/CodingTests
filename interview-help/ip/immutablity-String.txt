@@ -1,0 +1,248 @@
+Immutable object is the object which can't change the state of the object. the state is create when the object is intialised and it will not modify at all. If we provide any method which modify the state of the object it should create a new object with the modified state.
+
+To create immutable object create final class by makeing all the instance variable final. and those variable will be intialised only when it is got initialsed
+    Create a final class.
+    Set the values of properties using constructor only.
+    Make the properties of the class final and private
+    Do not provide any setters for these properties.
+    If the instance fields include references to mutable objects, don't allow those objects to be changed:
+        Don't provide methods that modify the mutable objects.
+        Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor; if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects when necessary to avoid returning the originals in your methods. 
+Advantages : as state is not changed we dont have to worry about the object state in the multithered scanario no need to handle any multithered monitors
+automatically thread safe.once create there is no state change and hence no inconsistent state.
+the best use of the immutable object is used in the key of the maps.
+the refrence of the immutable object is easyly shared and chahed and no need to copy or clone them as the state is not changed.
+
+ll wrapper classes in java.lang are immutable –
+String, Integer, Boolean, Character, Byte, Short, Long, Float, Double
+
+Dis Advantages.
+
+Reflection based frameworks are complicated by immutable objects since they requires constructor injection:
+
+    there are no default arguments in Java, which forces us to ALWAYS provide all of the necessary dependencies
+    constructor overriding can be messy
+    constructor argument names are not usually available through reflection, which forces us to depend on argument order for dependency resolution
+
+Is it possible to design a large-scale system (deep object graph) that predominately uses immutable objects?
+
+definitely yes; immutable objects makes great building blocks for other objects (they favor composition) 
+since it's much easier to maintain the invariant of a complex object when you can rely on its immutable components. The only true downside to me is about creating many temporary objects 
+
+
+StringBuffer:
+
+    Multi-Thread or thread-safe
+    Synchronized
+    Slower than StringBuilder
+
+StringBuilder
+
+    Single-Thread
+    Not-Synchronized
+    Faster than ever String
+	
++ is overloaded operator.
+
+
+Algarithems of string
+
+count the number of words in a string --> spilt the string usine space char that returns the string array and array length will be results in number of workds-- String[] words = string.trim().split(" "); words.length --> give number of words
+one more method is itareate through each char and find the space and check there is no space in the next char and count that as one word and print the count after going throught entire string
+int count = 1;for (int i = 0; i < s.length()-1; i++) { if((s.charAt(i) == ' ') && (s.charAt(i+1) != ' ')) { count++;}} System.out.println("Number of words in a string = "+count);
+
+count the total number of occurrences of a given character in a string without using any loop-->int count = s.length() - s.replace("a", "").length();
+length of the string minus the replace the string with the given char with nospace like "" that will give you the number of charcters without given char
+
+
+reverse a string
+Using StringBuffer class -- create a StringBuffer object using the string and call a method reverse() -- >StringBuffer sbf = new StringBuffer("MyJava"); System.out.println(sbf.reverse());    //Output : avaJyM
+Using iterative method --> convert given string to char array using charArray() method. And then we iterate that array in the reverse order.
+String str = "MyJava"; char[] strArray = str.toCharArray();
+for (int i = strArray.length - 1; i >= 0; i--){ System.out.print(strArray[i]);     //Output : avaJyM }
+Using recursive method.--> using recursive function
+recursiveMethod(String str){if(null == str || str.length <= 1){ return str}     return recursiveMethod(str.substring(1)) + str.charAt(0);}
+This method takes the first character of a string (str.charAt(0)) and puts it at the end of the string. And then calls itself on the remainder of the string (str.substring(1)). Finally adds these two things to get the reverse of the passed string (recursiveMethod(str.substring(1)) + str.charAt(0)). When the passed string is one character or less (str.length() <= 1), it stops calling itself and just returns the string passed.
+
+check if two Strings are anagrams of each other -Two strings are anagrams if they are written using the same exact letters, ignoring space, punctuation and capitalization. 
+Each letter should have the same count in both strings. For example, Army and Mary are anagram of each other.
+
+/*
+     * One way to find if two Strings are anagram in Java. This method
+     * assumes both arguments are not null and in lowercase.
+     *
+     * @return true, if both String are anagram
+     */
+    public static boolean isAnagram(String word, String anagram){       
+        if(word.length() != anagram.length()){
+            return false;
+        }
+       
+        char[] chars = word.toCharArray();
+       
+        for(char c : chars){
+            int index = anagram.indexOf(c);
+            if(index != -1){
+                anagram = anagram.substring(0,index) + anagram.substring(index +1, anagram.length());
+            }else{
+                return false;
+            }           
+        }
+       
+        return anagram.isEmpty();
+    }
+   
+    /*
+     * Another way to check if two Strings are anagram or not in Java
+     * This method assumes that both word and anagram are not null and lowercase
+     * @return true, if both Strings are anagram.
+     */
+    public static boolean iAnagram(String word, String anagram){
+        char[] charFromWord = word.toCharArray();
+        char[] charFromAnagram = anagram.toCharArray();       
+        Arrays.sort(charFromWord);
+        Arrays.sort(charFromAnagram);
+       
+        return Arrays.equals(charFromWord, charFromAnagram);
+    }
+   
+   
+    public static boolean checkAnagram(String first, String second){
+        char[] characters = first.toCharArray();
+        StringBuilder sbSecond = new StringBuilder(second);
+       
+        for(char ch : characters){
+            int index = sbSecond.indexOf("" + ch);
+            if(index != -1){
+                sbSecond.deleteCharAt(index);
+            }else{
+                return false;
+            }
+        }
+       
+        return sbSecond.length()==0 ? true : false;
+    }
+
+
+Read more: http://javarevisited.blogspot.com/2013/03/Anagram-how-to-check-if-two-string-are-anagrams-example-tutorial.html#ixzz4RQJYqNbp
+
+
+
+program to print first non repeated character from String
+
+/*
+     * Using LinkedHashMap to find first non repeated character of String
+     * Algorithm :
+     *            Step 1: get character array and loop through it to build a 
+     *                    hash table with char and their count.
+     *            Step 2: loop through LinkedHashMap to find an entry with 
+     *                    value 1, that's your first non-repeated character,
+     *                    as LinkedHashMap maintains insertion order.
+     */
+    public static char getFirstNonRepeatedChar(String str) {
+        Map<Character,Integer> counts = new LinkedHashMap<>(str.length());
+        
+        for (char c : str.toCharArray()) {
+            counts.put(c, counts.containsKey(c) ? counts.get(c) + 1 : 1);
+        }
+        
+        for (Entry<Character,Integer> entry : counts.entrySet()) {
+            if (entry.getValue() == 1) {
+                return entry.getKey();
+            }
+        }
+        throw new RuntimeException("didn't find any non repeated Character");
+    }
+
+
+    /*
+     * Finds first non repeated character in a String in just one pass.
+     * It uses two storage to cut down one iteration, standard space vs time
+     * trade-off.Since we store repeated and non-repeated character separately,
+     * at the end of iteration, first element from List is our first non
+     * repeated character from String.
+     */
+    public static char firstNonRepeatingChar(String word) {
+        Set<Character> repeating = new HashSet<>();
+        List<Character> nonRepeating = new ArrayList<>();
+        for (int i = 0; i < word.length(); i++) {
+            char letter = word.charAt(i);
+            if (repeating.contains(letter)) {
+                continue;
+            }
+            if (nonRepeating.contains(letter)) {
+                nonRepeating.remove((Character) letter);
+                repeating.add(letter);
+            } else {
+                nonRepeating.add(letter);
+            }
+        }
+        return nonRepeating.get(0);
+    }
+
+
+    /*
+     * Using HashMap to find first non-repeated character from String in Java.
+     * Algorithm :
+     * Step 1 : Scan String and store count of each character in HashMap
+     * Step 2 : traverse String and get count for each character from Map.
+     *          Since we are going through String from first to last character,
+     *          when count for any character is 1, we break, it's the first
+     *          non repeated character. Here order is achieved by going
+     *          through String again.
+     */
+    public static char firstNonRepeatedCharacter(String word) {
+        HashMap<Character,Integer> scoreboard = new HashMap<>();
+        // build table [char -> count]
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (scoreboard.containsKey(c)) {
+                scoreboard.put(c, scoreboard.get(c) + 1);
+            } else {
+                scoreboard.put(c, 1);
+            }
+        }
+        // since HashMap doesn't maintain order, going through string again
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (scoreboard.get(c) == 1) {
+                return c;
+            }
+        }
+        throw new RuntimeException("Undefined behaviour");
+    }
+
+
+Read more: http://javarevisited.blogspot.com/2014/03/3-ways-to-find-first-non-repeated-character-String-programming-problem.html#ixzz4RQvRlbnt
+
+
+to create permuations of the string
+
+public static void main(String[] args) {
+
+		String abc = "abc";
+		printPermutations(abc);
+
+	}
+
+	static void printPermutations(String str) {
+		printPermutations("", str);
+	}
+
+	static void printPermutations(String prefix, String str) {
+		int n = str.length();
+		if (n == 0)
+			System.out.println(prefix);
+		else {
+			for (int i = 0; i < n; i++)
+				printPermutations(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n));
+		}
+	}
+	
+	
+}
+
+
+
+
+

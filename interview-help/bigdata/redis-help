@@ -1,0 +1,121 @@
+edis supports 6 data types. You need to know what type of value that a key maps to, as for each data type, the command to retrieve it is different.
+
+Here are the commands to retrieve key value:
+
+if value is of type string -> GET <key>
+if value is of type hash -> HGETALL <key>
+if value is of type lists -> lrange <key> <start> <end>
+if value is of type sets -> smembers <key>
+if value is of type sorted sets -> ZRANGEBYSCORE <key> <min> <max>
+if value is of type stream -> xread count <count> streams <key> <ID>. https://redis.io/commands/xread
+Use the TYPE command to check the type of value a key is mapping to:
+
+type <key>
+
+
+
+
+version: '3'
+
+services:
+  redis:
+    image: redis
+    ports: 
+     - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge
+    volumes: 
+      - cache:/data
+  noc-reports:
+    build: .
+    ports:
+      - "9090:9090"
+volumes:
+  cache:
+    driver: local
+	
+	
+	
+	
+	cache:
+    type: redis
+  redis:
+     host: redis
+     port: 6379
+     password: eYVX7EwVmmxKPCDmwMtyKVge
+	 
+cache:
+    type: redis
+  redis:
+     cluster:
+       nodes:
+        - 172.18.0.3:6379
+        - 172.18.0.2:6379
+        - 172.18.0.4:6379
+       maxRedirects: 2
+	 
+	 
+	 
+redis-cli -h clustercfg.microservice-cache-test.2rxnyl.memorydb.us-west-2.amazonaws.com -p 6379 --tls
+
+
+
+	//List<String> clusterNodes = Arrays.asList("redispw@localhost:55000");
+//	@Bean
+//	public RedisTemplate<String, Object> redisTemplate() {
+//	    RedisTemplate<String, Object> template = new RedisTemplate<>();
+//	    template.setConnectionFactory(jedisConnectionFactory());
+//		template.afterPropertiesSet();
+//	    return template;
+//	}
+	
+	
+//	@Bean
+//	JedisConnectionFactory jedisConnectionFactory() {
+//		RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+//		config.setHostName("127.0.0.1");
+//		config.setPort(6379);
+////		config.setPassword("eYVX7EwVmmxKPCDmwMtyKVge");
+//	    return new JedisConnectionFactory(config);
+//	}
+//
+//	@Bean
+//	public RedisTemplate<String, Object> redisTemplate() {
+//	    RedisTemplate<String, Object> template = new RedisTemplate<>();
+//	    template.setConnectionFactory(jedisConnectionFactory());
+//	    return template;
+//	}
+
+//			for(int i =0; i< 7; i++) {
+//				Instant start = Instant.now();
+//				Map<String, CellSiteEntity> cellTowerInventory = cellSiteInfoList.subList(i*1000, (i+1)*1000).stream().collect(Collectors.toMap(CellSiteEntity::getUniqueID, Function.identity(), (e1, e2) -> e1));
+//				
+//				
+//				saveMulti(cellTowerInventory);
+//				//redisTemplate.opsForValue().multiSet(cellTowerInventory);
+//			
+//				Instant end = Instant.now();
+//				log.info(Duration.between(start, end));
+//			}
+
+
+	public void saveMulti(Map<String, CellSiteEntity> rows){
+		this.redisTemplate.executePipelined(new RedisCallback<Object>(){
+
+			@Override
+			public Object doInRedis(RedisConnection connection)
+					throws DataAccessException {
+				StringRedisConnection stringRedisConn = (StringRedisConnection)connection;
+				Map<byte[], byte[]> rawKeys = new LinkedHashMap<>(rows.size());
+
+				
+				for (Entry<String, CellSiteEntity> entry : rows.entrySet()) {
+					rawKeys.put(entry.getKey().getBytes(), entry.getValue().toString().getBytes());
+				}
+			    stringRedisConn.mSet(rawKeys);
+				
+				return null;
+			}
+			
+		});
+	}
+	

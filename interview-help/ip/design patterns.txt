@@ -1,0 +1,288 @@
+Creational design pattrens
+prototype - Fully intialized instance to be copied or cloned - chess game
+singleton- Single instance of the object per JVM -- Private constructor  -- it is not thread safe
+factory - Create family of object based on the type
+Abstract factory - Create factory objects based on the types
+
+
+With the Factory pattern, you produce implementations (Apple, Banana, Cherry, etc.) of a particular interface -- say, IFruit.
+
+With the Abstract Factory pattern, you produce implementations of a particular Factory interface -- e.g., IFruitFactory. Each of those knows how to create different kinds of fruit.
+
+Builder -  Sperate object construction from its representation - ex : StringBuilder or Create complex object with multiple steps
+Basic Factory Example
+
+// Factory
+static class FruitFactory {
+    static Fruit create(name, color, firmness) {
+        // Additional logic
+        return new Fruit(name, color, firmness);
+    }
+}
+
+// Usage
+Fruit fruit = FruitFactory.create("apple", "red", "crunchy");
+
+Basic Builder Example
+
+// Builder
+class FruitBuilder {
+    String name, color, firmness;
+    FruitBuilder setName(name)         { this.name     = name;     return this; }
+    FruitBuilder setColor(color)       { this.color    = color;    return this; }
+    FruitBuilder setFirmness(firmness) { this.firmness = firmness; return this; }
+    Fruit build() {
+        return new Fruit(this); // Pass in the builder
+    }
+}
+
+// Usage
+Fruit fruit = new FruitBuilder().setName("apple")
+        .setColor("red")
+        .setFirmness("crunchy")
+        .build();
+
+
+
+
+
+Structual pattrens
+Proxy - An object representation of other object- Ejb remote and home methods or eager or lazy loding in hybernate
+Adapter - Match or implement the interface of the diffirent classes --> power adapter
+Decorator - Additional responsiblity to the object dynamically. Easy to add behaviour at runtime 
+Facede - Single class represent the entire subsystem --> Reduce network calls, Reduce coupling, helps in establising the transaction boundries
+Flywaight -A fine grained object instance used for efficient sharing -- String might use this pattrens
+
+
+
+
+
+Proxy, Decorator, Adapter, and Bridge are all variations on "wrapping" a class. But their uses are different.
+
+Proxy could be used when you want to lazy-instantiate an object, or hide the fact that you're calling a remote service, or control access to the object.
+
+Decorator is also called "Smart Proxy." This is used when you want to add functionality to an object, but not by extending that object's type. This allows you to do so at runtime.
+Decorator is also good to avoid out of control type hierarchies. For example, say you have a window in a GUI and you want to have optional scroll bars. You could have Window, VScrollWindow, HScrollWindow, and VHScrollWindow classes or you could make VScroll and HScroll decorators on Window. 
+
+Adapter is used when you have an abstract interface, and you want to map that interface to another object which has similar functional role, but a different interface.
+
+Bridge is very similar to Adapter, but we call it Bridge when you define both the abstract interface and the underlying implementation. I.e. you're not adapting to some legacy or third-party code, you're the designer of all the code but you need to be able to swap out different implementations.
+
+Facade is a higher-level (read: simpler) interface to a subsystem of one or more classes. Suppose you have a complex concept that requires multiple objects to represent. Making changes to that set of objects is confusing, because you don't always know which object has the method you need to call. That's the time to write a Facade that provides high-level methods for all the complex operations you can do to the collection of objects. Example: a Domain Model for a school section, with methods like countStudents(), reportAttendance(), assignSubstituteTeacher(), and so on.
+
+
+So are their structures.
+
+    Proxy and Decorator both have the same interface as their wrapped types, but the proxy creates an instance under the hood, whereas the decorator takes an instance in the constructor.
+
+    Adapter and Facade both have a different interface than what they wrap. But the adapter derives from an existing interface, whereas the facade creates a new interface.
+
+    Bridge and Adapter both point at an existing type. But the bridge will point at an abstract type, and the adapter might point to a concrete type. The bridge will allow you to pair the implementation at runtime, whereas the adapter usually won't.
+
+
+Differences in constructors
+
+Pattern differences are also obvious when looking at their constructors.
+
+Proxy is not wrapping an existing object. There is no subject in constructor.
+
+Decorator and Adapter does wrap already existing object, and such is typically provided in the constructor.
+
+Facade constructor takes root element of a whole object graph, otherwise it looks same as Adapter.
+
+
+Behaviour
+Strategy - Enacapsulate an algarithem inside class
+command - Enacapsulate command request as an object
+Memento - Capture and restore an object interanal state, Undo/redo operation
+State  - Alter the object behaviour when the state changes -- fan control
+Visitor - Define a new operation to the class without change - operation of the taxy company
+
+Observer - way to notify the change to number of classes
+chain of responsiblity - A way of passing the request between chain of objects - Exception handling
+Iterator - Sequenctial access the elements of the collection
+
+Template - Defer the exact implementaion of the algarithem to its subclass
+
+Mediator - Define simplfied communication between classes
+
+
+
+Command VS strategy
+
+public class ConcreteStrategy implements BaseStrategy {
+
+    @Override
+    public void execute(Object argument) {
+        // Work with passed-in argument.
+    }
+
+}
+
+public class ConcreteCommand implements BaseCommand {
+
+    private Object argument;
+
+    public ConcreteCommand(Object argument) {
+        this.argument = argument;
+    }
+
+    @Override
+    public void execute() {
+        // Work with own state.
+    }
+
+}
+
+
+
+You can find an overview of a lot of design patterns in Wikipedia. It also mentions which patterns are mentioned by GoF. I'll sum them up here and try to assign as many pattern implementations as possible, found in both the Java SE and Java EE APIs.
+Creational patterns
+Abstract factory (recognizeable by creational methods returning the factory itself which in turn can be used to create another abstract/interface type)
+
+    javax.xml.parsers.DocumentBuilderFactory#newInstance()
+    javax.xml.transform.TransformerFactory#newInstance()
+    javax.xml.xpath.XPathFactory#newInstance()
+
+Builder (recognizeable by creational methods returning the instance itself)
+
+    java.lang.StringBuilder#append() (unsynchronized)
+    java.lang.StringBuffer#append() (synchronized)
+    java.nio.ByteBuffer#put() (also on CharBuffer, ShortBuffer, IntBuffer, LongBuffer, FloatBuffer and DoubleBuffer)
+    javax.swing.GroupLayout.Group#addComponent()
+    All implementations of java.lang.Appendable
+
+Factory method (recognizeable by creational methods returning an implementation of an abstract/interface type)
+
+    java.util.Calendar#getInstance()
+    java.util.ResourceBundle#getBundle()
+    java.text.NumberFormat#getInstance()
+    java.nio.charset.Charset#forName()
+    java.net.URLStreamHandlerFactory#createURLStreamHandler(String) (Returns singleton object per protocol)
+    java.util.EnumSet#of()
+    javax.xml.bind.JAXBContext#createMarshaller() and other similar methods
+
+Prototype (recognizeable by creational methods returning a different instance of itself with the same properties)
+
+    java.lang.Object#clone() (the class has to implement java.lang.Cloneable)
+
+Singleton (recognizeable by creational methods returning the same instance (usually of itself) everytime)
+
+    java.lang.Runtime#getRuntime()
+    java.awt.Desktop#getDesktop()
+    java.lang.System#getSecurityManager()
+
+Structural patterns
+Adapter (recognizeable by creational methods taking an instance of different abstract/interface type and returning an implementation of own/another abstract/interface type which decorates/overrides the given instance)
+
+    java.util.Arrays#asList()
+    java.util.Collections#list()
+    java.util.Collections#enumeration()
+    java.io.InputStreamReader(InputStream) (returns a Reader)
+    java.io.OutputStreamWriter(OutputStream) (returns a Writer)
+    javax.xml.bind.annotation.adapters.XmlAdapter#marshal() and #unmarshal()
+
+Bridge (recognizeable by creational methods taking an instance of different abstract/interface type and returning an implementation of own abstract/interface type which delegates/uses the given instance)
+
+    None comes to mind yet. A fictive example would be new LinkedHashMap(LinkedHashSet<K>, List<V>) which returns an unmodifiable linked map which doesn't clone the items, but uses them. The java.util.Collections#newSetFromMap() and singletonXXX() methods however comes close.
+
+Composite (recognizeable by behavioral methods taking an instance of same abstract/interface type into a tree structure)
+
+    java.awt.Container#add(Component) (practically all over Swing thus)
+    javax.faces.component.UIComponent#getChildren() (practically all over JSF UI thus)
+
+Decorator (recognizeable by creational methods taking an instance of same abstract/interface type which adds additional behaviour)
+
+    All subclasses of java.io.InputStream, OutputStream, Reader and Writer have a constructor taking an instance of same type.
+    java.util.Collections, the checkedXXX(), synchronizedXXX() and unmodifiableXXX() methods.
+    javax.servlet.http.HttpServletRequestWrapper and HttpServletResponseWrapper
+
+Facade (recognizeable by behavioral methods which internally uses instances of different independent abstract/interface types)
+
+    javax.faces.context.FacesContext, it internally uses among others the abstract/interface types LifeCycle, ViewHandler, NavigationHandler and many more without that the enduser has to worry about it (which are however overrideable by injection).
+    javax.faces.context.ExternalContext, which internally uses ServletContext, HttpSession, HttpServletRequest, HttpServletResponse, etc.
+
+Flyweight (recognizeable by creational methods returning a cached instance, a bit the "multiton" idea)
+
+    java.lang.Integer#valueOf(int) (also on Boolean, Byte, Character, Short, Long and BigDecimal)
+
+Proxy (recognizeable by creational methods which returns an implementation of given abstract/interface type which in turn delegates/uses a different implementation of given abstract/interface type)
+
+    java.lang.reflect.Proxy
+    java.rmi.*
+    javax.ejb.EJB (explanation here)
+    javax.inject.Inject (explanation here)
+    javax.persistence.PersistenceContext
+
+Behavioral patterns
+Chain of responsibility (recognizeable by behavioral methods which (indirectly) invokes the same method in another implementation of same abstract/interface type in a queue)
+
+    java.util.logging.Logger#log()
+    javax.servlet.Filter#doFilter()
+
+Command (recognizeable by behavioral methods in an abstract/interface type which invokes a method in an implementation of a different abstract/interface type which has been encapsulated by the command implementation during its creation)
+
+    All implementations of java.lang.Runnable
+    All implementations of javax.swing.Action
+
+Interpreter (recognizeable by behavioral methods returning a structurally different instance/type of the given instance/type; note that parsing/formatting is not part of the pattern, determining the pattern and how to apply it is)
+
+    java.util.Pattern
+    java.text.Normalizer
+    All subclasses of java.text.Format
+    All subclasses of javax.el.ELResolver
+
+Iterator (recognizeable by behavioral methods sequentially returning instances of a different type from a queue)
+
+    All implementations of java.util.Iterator (thus among others also java.util.Scanner!).
+    All implementations of java.util.Enumeration
+
+Mediator (recognizeable by behavioral methods taking an instance of different abstract/interface type (usually using the command pattern) which delegates/uses the given instance)
+
+    java.util.Timer (all scheduleXXX() methods)
+    java.util.concurrent.Executor#execute()
+    java.util.concurrent.ExecutorService (the invokeXXX() and submit() methods)
+    java.util.concurrent.ScheduledExecutorService (all scheduleXXX() methods)
+    java.lang.reflect.Method#invoke()
+
+Memento (recognizeable by behavioral methods which internally changes the state of the whole instance)
+
+    java.util.Date (the setter methods do that, Date is internally represented by a long value)
+    All implementations of java.io.Serializable
+    All implementations of javax.faces.component.StateHolder
+
+Observer (or Publish/Subscribe) (recognizeable by behavioral methods which invokes a method on an instance of another abstract/interface type, depending on own state)
+
+    java.util.Observer/java.util.Observable (rarely used in real world though)
+    All implementations of java.util.EventListener (practically all over Swing thus)
+    javax.servlet.http.HttpSessionBindingListener
+    javax.servlet.http.HttpSessionAttributeListener
+    javax.faces.event.PhaseListener
+
+State (recognizeable by behavioral methods which changes its behaviour depending on the instance's state which can be controlled externally)
+
+    javax.faces.lifecycle.LifeCycle#execute() (controlled by FacesServlet, the behaviour is dependent on current phase (state) of JSF lifecycle)
+
+Strategy (recognizeable by behavioral methods in an abstract/interface type which invokes a method in an implementation of a different abstract/interface type which has been passed-in as method argument into the strategy implementation)
+
+    java.util.Comparator#compare(), executed by among others Collections#sort().
+    javax.servlet.http.HttpServlet, the service() and all doXXX() methods take HttpServletRequest and HttpServletResponse and the implementor has to process them (and not to get hold of them as instance variables!).
+    javax.servlet.Filter#doFilter()
+
+Template method (recognizeable by behavioral methods which already have a "default" behaviour definied by an abstract type)
+
+    All non-abstract methods of java.io.InputStream, java.io.OutputStream, java.io.Reader and java.io.Writer.
+    All non-abstract methods of java.util.AbstractList, java.util.AbstractSet and java.util.AbstractMap.
+    javax.servlet.http.HttpServlet, all the doXXX() methods by default sends a HTTP 405 "Method Not Allowed" error to the response. You're free to implement none or any of them.
+
+Visitor (recognizeable by two different abstract/interface types which has methods definied which takes each the other abstract/interface type; the one actually calls the method of the other and the other executes the desired strategy on it)
+
+    javax.lang.model.element.AnnotationValue and AnnotationValueVisitor
+    javax.lang.model.element.Element and ElementVisitor
+    javax.lang.model.type.TypeMirror and TypeVisitor
+    java.nio.file.FileVisitor and SimpleFileVisitor
+    javax.faces.component.visit.VisitContext and VisitCallback
+
+
+
+

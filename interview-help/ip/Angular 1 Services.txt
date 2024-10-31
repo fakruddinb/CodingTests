@@ -1,0 +1,87 @@
+Angluar 1 Services
+The $http service
+Promises and async
+
+Services are reusable code in the angular that can be shared across multiple controllers, these can be values,constants,objects and functions.using services we share the data across the controllers
+set up the necessary programs in our development environment to write and execute code in this course.
+Node Js - install node js. let us build or help by giving some tools which will helpful in development of web application
+http-server - used to run the script in server
+Json_server- git hub - will build simple rest services in 30 sec
+
+Building the Contacts app
+We'll start by buildiing a Contact / Phone book application. We'll make changes to this app as we go through this course.
+
+ 
+Services in depth;
+first of the Angular constructs to share data - The value service.
+
+var app = 	AngularModule("name")
+
+appp.value("nameSvc","this is the value assiciated with the name")
+
+
+app.controller()
+
+function headerCtrl(nameSvc){  --> injecting the value service
+	$scope.headerData = nameSvc;
+}
+
+Constant Service and sharing functions
+Let's look at the constant service and how to use it
+
+Constant service will be created similar to value service
+
+app.constant("appDataSvc",{
+	"name" : "AppName",
+	"author" : "name"
+	
+})
+
+app.value("appFucionSvc",function(){
+	console.log(hello);
+})
+
+function headerCtrl(appDataSvc,appFucionSvc)
+	$scope.title = appDataSvc.name;
+	appFucionSvc();
+}
+
+diffrece between value and constant service
+app configuration phase --> we can only use constant function 
+Let you share objects, Values, Functions
+
+Here if we have a function in the value constant then it will return the function not the value of the function. So you need to call that function in controller
+
+Factory Service
+This tutorial is about the factory service. This is one of the two most commonly used services to share functionality and data.
+Factory expects name and the function and we can write the function in which we can inject other services . this cannot be done in value functions
+
+app.factory("appFactorySvc", function(){
+	return "this will be return to factory service.. the function itself will not be returned";
+});
+
+The Service service
+
+This tutorial examines the very confusingly names 'service' service. We'll write such a service now.
+
+Provider and 98% of the time it is not used in the application
+
+Service  --> execte the functions in construction mode
+app.factory("appFactorySvc", AppConfig) // AppConfig()
+app.service("appDataService" AppConfig)  // new AppConfig()
+
+Angular Factory vs Service
+When do you use a factory and when do you use a service? This tutorial answers that question.
+Factory    Service
+
+
+Factory your function can return anything..
+service is you need to only return object you need to use this. to create and populate the value
+Service is good to use
+
+
+
+
+
+
+

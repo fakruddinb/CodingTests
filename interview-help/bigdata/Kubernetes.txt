@@ -1,0 +1,67 @@
+Kubernetes is a open source container orchestration platform, It automates the deployment, scaling and management of containerize applications.
+2014 gogle open sources borge which is called Kubernetes also know as k8s
+
+Kubernetes cluster is set of machines called nodes that are used to run containerized application, 
+2 core pieces in k8s clustuer 
+- control plane - responsible for managing the state of the cluster, in production env the control plan runs on multiple nodes that span across several data center zones
+  core components of Control panel
+	API server is the primary interface between the control plane and the rest of the cluster, it exposes a RESTful API that allows clients to interact with the control plane and submit requests to manager the cluster
+	etcd - distributed key-value store, it stores what states of the cluster are changed, what resourcs are available, is the cluster is helthey 
+	scheduler - is responsible for scheduling pods onto the worker nodes in the cluster	
+	controller manager - for running the controllers that manage state of the cluster, for ex replication controllers which ensure the desired number of replicas of the pod are running and the deployment controller which manages the rolling update and rollbacks of deployments
+
+- Set of worker nodes, these nodes run the containerized application workloads. the containerized application run in Pods. Pods are the smallest deployable units in Kubernetes and provide shared storage and networking for those containers. worker nodes have one or more pods and each pod will have one or more container
+core comonents are 
+kubelet - demons that runs on each worker node and responsible for communicating with the control plane, It receives instructions from the control plane about which pods to run on the node and ensures that it desired state of the pods is maintained, 
+container runtime - the container runtime runs the containers on the workers nodes is responsible for pulling the container images from the registry, starting and stoping the containers resources and manageing container resources
+and kube proxy- is the networking proxy that runs on each worker nodes, is responsible for routing traffic to the correct pods and also provide the load balancing for the pods and ensuring that the traffic is distributed evenly across the pods 
+
+pro's --
+Kubernates is scalable and highly available, provides futures like self healing automatic rollbacks and horizontal scaling and makes it is to scale the applications up and down as needed.allowing us to make changes and demand quickly.
+is portable, - it helps to deploy and manage applications in consistent and reliable way regardless of the underliying infrastrure.
+
+-con's
+is complexity , it is complex to setup and operate, the upfront cost is high, for the organizations new to the container orchestration.
+It requires high level expertise and resources to set up operate and manager production enviorment
+-Cost - it requires certain minimum level of resources to run order to support all features mentioned below
+requires many nodes for the resilency and safety
+mange resource allocation
+scheculing
+
+Managed K8s services are provided by cloud provider
+Amazon EKS
+Google Kubernetes Engine 
+Azure kubernates Services AKS
+
+They take care of the task required for setting up and configrating 
+Setting up
+Configuration of control plane
+Scaling the cluster
+Providing ongoing maintainence and support 
+for small organization YGANI you are gone aint need it
+
+
+play with kubernates
+play with kubernates classroom
+kubernate playground
+
+local kubernates
+--- Minicube
+kubeadm
+
+Apache Marathan
+Docker swarm
+
+written go lang
+
+-------------
+
+the architecture might be master slave/ Client server
+
+One cluster
+	- one master - Control plane
+	- multiple Nodes (
+
+
+
+

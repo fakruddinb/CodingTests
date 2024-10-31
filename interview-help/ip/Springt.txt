@@ -1,0 +1,224 @@
+Spring --> light wait,Dependency injection, AOP
+
+ write code to implement the BeanFactory concept that we learnt in our previous tutorial. 
+ We'll write a Spring XML to configure a Spring bean. Then we'll use the BeanFactory to instantiate our bean in the Spring container.
+ Xmlbeanfactory reads the beans from the xml bean file
+ Filesystemresource("Spring.xml")
+ factoy.getbean("id")
+ 
+ ApplicationContext is bean faoctory + addition functionaly AOP event notification
+ first replace the BeanFactory with the more powerful ApplicationContext. We'll then make Spring initialize a property of an object by specifying the value in the configuration XML.
+ ApplicationContext context = 
+ In this tutorial, we'll look at some concepts related to bean naming and usage like alias and idref. We'll also understand how to write inner beans.
+ bean tags , Property tags, constructor-arg type 
+ property --> to find the type of argument
+ 
+ Injecting Objects
+ In this tutorial, we'll use dependency injection to inject an object dependency to a Spring bean.
+
+ Inner Beans, Aliases and idref
+
+Bean Autowiring
+
+We'll now look at a configuration feature provided by Spring to wire dependencies automatically: Bean Autowiring. 
+We'll learn about different types of autowiring, and we'll write some code to implement bean autowiring by name.
+autowired by name, type,
+autowire = "byName" or "byType" or "constructor" --> one by 
+by defult autowire is off not enabled.
+
+Bean scope
+singlton -> only one per spring container/ bean defenetion  -- defult eagar
+prototype -> new bean every request or with refernce and it is lazy
+
+Web aware Context bean scopes
+Request : new bean per servlet request
+Session : new bean per session
+Global session: new bean /global session
+
+Using ApplicationContextAware
+
+We'll provide our beans with access to the ApplicationContext object by implementing the ApplicationContextAware interface. 
+We'll also use BeanNameAware interface to get the name of the bean configured in the Spring XML.
+If we want to introduce appliactioncontext in our beans then we need implement ApplicationContextAware  -- implement a method setApplicationContext()
+BeanNameAware --> if you want to get the bean name 
+
+Bean Definition Inheritance
+In this tutorial, we'll learn what bean definition inheritance is, and how to configure a parent bean definition and have children beans inherit the bean definitions
+it can be done by using "parent" = whatever bean defenetion you want to inherit
+
+Lifecycle Callbacks
+We'll use two different ways to run methods on initialization and destruction of beans.
+When you write a desktop methods ..
+Change from ApplicationContext to AbstractApplicationContext
+context.registerShutdown();
+
+implement interface called InitializingBean --> implement afterPropertySet()	
+implement interface DesposibleBean --> implement destroy mehthod
+
+one more method to do this
+write 2 method like init and destroy.
+then in the bean definition init-method= initmethod name and destroy-method = methodname.
+
+Writing a BeanPostProcessor
+
+In this tutorial, we'll understand what a BeanPostProcessor is. 
+We'll also write a BeanPostProcessor that prints a message upon initializing each and every bean in the Spring XML.
+
+if we want to do something before the intialization of the bean we create a method 
+write a class by inheriting the BeanPostProcessor interface and then implement postprocessbeforeinitialization and postprocessafterinitialization
+and configure that bean in xml
+
+Writing a BeanFactoryPostProcessor
+
+In this tutorial, we'll learn about and write our own BeanFactoryPostProcessor. 
+We'll also try out a handy BeanFactoryPostProcessor that comes with Spring: the PropertyPlaceholderConfigurer.
+if we want to do something before intilisation of bean factoy 
+write a class by inheriting the BeanPostProcessor interface and then implement postprocessbeforeinitialization and postprocessafterinitialization
+and configure that bean in xml
+PropertyPlaceholderConfigurer --> look at the property file .. before bean factoy is executed
+configure and give the location of the file
+
+Coding To Interfaces
+
+When using Spring for dependency injection, it's a good practice to use interfaces for referencing dependencies. In this tutorial, we'll learn how to 'code to interfaces'.
+
+Introduction to Annotations and the Required Annotation
+
+Here we'll have our first look at Spring annotations.
+ We'll understand and implement the Required annotation, 
+ and we'll also learn how it's actually a BeanPostProcessor that's working behind the scenes.
+ @Required --> on getter method and configure required bean process or configure all the bean process
+ 
+ The Autowired Annotation
+
+In this tutorial, we'll use the Autowired annotation to wire up dependencies. We'll learn how to add dependencies by type and name. We'll also use Qualifiers to narrow down dependency contenders.
+@autowired --> add bean processer
+@quilfier
+
+Some JSR-250 Annotations
+We'll learn and implement three JSR-250 annotations that Spring supports:Resource, PostConstruct and PreDestroy.
+
+
+
+
+
+Tranaction setting 
+
+	<tx:advice id="ibisTransactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" isolation="READ_COMMITTED" propagation="REQUIRED" timeout="-1" no-rollback-for="" rollback-for=""/>
+
+
+
+
+
+AOP - Aspected oriented programming
+----------
+This is used to reslove the cross cutting requirement or commmon functionality to apply for set of classes or methods like logging, 
+
+what should we do?
+create a class act as Aspect
+Aspect Configuration where thse apply--> which tell which class and which method to apply the aspect
+Wrapping around method like before and after the accepcts 
+
+Add the jars of AspectJ aspectrt.jar and aspectjwaiver.jar and aopalliance.jar ,cgilib.jar, asm 3.1
+search for aspectj-autoproxy and copy and paste required things in spring.xml which will help to use aop name space.
+<aop:aspectautoproxy>
+we'll implement the Logging aspect. We'll learn how to create a new Aspect using annotations and configure an advice to run before a getter method.
+
+
+Aspects contains number of advice methods
+@Aspect --> It will convert class Aspect and method to advice
+@Before("execution(public String getName())") --> make advice method to run before target method and target method can be configured in execution() method and 
+@After()
+
+Pointcuts and Wildcard Expressions 
+PointCut are the locations of the target methods definition. This can be done by wildcard expression.
+execution(public String getName()) --> this will executed when it see getName() method irrespective of classname.
+execution(public String com.sss.Classname.getName()) --> this will executed when it see getName() method classname.
+
+one advice applied to multipe point or different points 
+execution(public String com.sss.Classname.get*())  --> this will executed when it see getXXX() methods of classname.
+
+execution(* get*(...))  --> this will executed when it see getXXX() methods will apply on any type of return and any number of parameters
+
+
+Muliple advice method for one pointCut --> apply the expression on the method 
+@Before("allGetters() && allCircles()")
+
+@Pointcut(execution(* get*(...))) --> this is defination of pointcut
+public void allGetters();
+
+PointCut are the locations of the target methods definition. This can be done by wildcard expression.
+few other Pointcut expressions that can be used to advice different methods.
+
+within("All methods with in some class")
+arg(name); --> it matches the argument in the methods and also it can be passed to the method advice
+
+JoinPoint --> information of method into advice .. means all the places where all the apply can advice and in spring only methods 
+
+public void logginAdvice(JoinPoint joinpoint){
+	joinpoint.getTarget() --> this will get us the object 
+}
+
+After Advice types: `After` (finally), `AfterReturning` and `AfterThrowing`.
+
+After(args(name))
+AfterReturning(args(name)) --> after retuning the response
+AfterReturning(pintcut=args(name),returning = "returnString") 
+AfterThrowing(args(name)); --
+AfterThrowing(pointcut = args(name), throwing="returnString")
+public void afterExceptionThrown()
+
+
+Around advice type. We'll learn how to use it, and we'll also look at some of the unique and powerful features that are specific to this advice type.
+
+Around -- before and after the method.
+ProcceedingJoinPoint will be used as argument to advice 
+ProcceedingJoinPoint.proceed();
+ 
+I share some thoughts on naming conventions, and how it helps in the case of writing aspects in Spring. 
+We will also understand how to write our own custom annotations to apply advice to methods.
+
+User proper conventions like proper pakaging 
+
+All abouve are using the anotation 
+configure aspects, advice and pointcuts using the traditional XML way.
+
+Define the bean for the Aspect in XML
+<aop-config>
+	<aop:aspect id="logginAspect" ref="loggingAspect" >
+		<aop-pointcut id = "allGetters" expression="exacution(* * get*())" />
+		<aop-around pointcut-ref="allGetters"   method = "myAroundAdvice" pointcut = "inline expression defination "/>
+	</aop-aspect>
+</aop-config>
+
+Understanding AOP Proxies
+how Spring AOP works and how it uses proxy classes to apply advice. And we'll do this by implementing our own simple factory service. The way Spring AOP works is much more complicated, but this simple implementation should give us a solid understanding of proxy objects and clarify the core concepts.
+
+Spring does all this using proxy. 
+
+
+
+ accepted
+	
+
+RequiresNew does not create a nested transaction because the first transaction is suspended while the second transaction is running. A nested transaction looks like this:
+
+Nested transaction example
+> method1 - begin tran1
+  > method2 - begin tran2
+    workA
+  < method2 - commit tran2
+< method1 - rollback tran1 (tran2 also rolled back because it's nested)
+
+Instead, RequiresNew looks like this:
+
+EJB RequiresNew example
+> method1 - begin tran1
+  > method2 - suspend tran1, begin tran2
+    workA
+  < method2 - commit tran2, resume tran1
+< method1 - rollback tran1 (tran2 remains committed)
+
+

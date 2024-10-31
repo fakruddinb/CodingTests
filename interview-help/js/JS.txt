@@ -1,0 +1,218 @@
+light weight - Small memory foot print, easy to implement
+no interpreted - No compilation, instructions executed directly
+Object-oriented - model around objects
+first-class functions - functions can be used as a values, functions as parameters of functions
+Scripting language - wirting the script for runtime env, env like javascript
+Used to build native javascript, Jqeruy, Angular JS, REact,
+DOM tree - Document object Model tree
+
+Server side development
+-NodeJs
+-Express
+
+Standards - ECMa - script
+ECMa -6
+
+Types and variables
+Vairables - no declaration
+var value = 42;
+Number
+String
+boolean
+undefined; var u;
+null v = null;
+symbal
+
+No need to declare variable typoe
+The same variable can be assigned vbalues of differnt types.
+No scipeing information in variable declartion
+Variables and values can be "interrogated" means use "typeof" operator will give to typoe
+type of null will returns objects
+
+Type coercion === operator
+123 + "ab" -> 123ab
+== -> compares two values by converting one another 
+=== -> compares types 
+
+every value in js has associated boolean value for ex 0 is false and other number are true, and "" false and "ww" is true, undefined is false and null is false
+
+Objects it is not classbased language until the ecma 5
+
+Objects and prototype 
+Java script is oopl - Object ori
+what is Prototypes--
+blue print for the object and create an object and it is called prototype
+ways to create a object like constructor.
+ways to execute is functions
+this refrence 
+Prototypes
+no concept of class -- it will build classes by using the prototype
+
+Objects are collection mulitple values like a variables etc.
+Inline objects
+var obj = {}; --> empty object
+var obj = {	"" }
+
+Free-form - no bound to a class
+Object literal notation to create objects
+Object properties can be accessed directly
+New properties can be added directly on the run time
+Objects can have methods
+access properties can access by using . and ["property_name"]
+[] would be used the property which is invalid or reserve and property name is dynamic 
+we can have nested objects also
+remove the properies from object using delete key word, delete person.age
+
+
+Arrays
+var myArray [1,2,3] -> access myArray[0]
+myArray.length
+
+Wrapper Objects
+String, Number , Boolean etc
+
+Functions
+Functions can be wirtten in literal form
+A function is a "value" that can be assigned to a variable
+Can be called by passing argum,ents
+Functions are objects!
+Flexible argument count
+No function overloading
+Default arguments
+The "arguments" argument and this
+
+no method overloading if you get the variable values and not supplied will be undefined
+we can assing the functions to variable and exectue the function using the variable name
+functions arguments can be retrived using the key name called "arguments" in the function
+and this is by defult will get in the function
+Ananymus function --> without the name
+var f = function (){}
+
+Functions as arguments
+var execute = function(fn) {fn();}
+
+Functions on Objects
+assign the function() to the object properties
+
+Understanding the "this" keyword - self refrence
+use this in the scope of the object;
+
+
+Arrays
+functions of arrays
+push(arg) -> add the value at last of the array
+pop() -> retuns the last element
+shift() -> return from the front of the array
+unshift(value) -> add from the front element
+foreach -> most popular 
+
+myArray.forEach(function(item,index,array){
+console.log(item, index);
+}));
+
+Math
+Date
+
+Scopes and closures
+JS has function scoping and not the block scoping
+variables declared with the function has inner scope and can't access outside or in other function
+IIFE -- immediatly invocked function expression
+(fucntion () {
+	console.log("")
+})();
+
+Read and write operation
+write is ok without declaration
+read is not ok without declaration
+
+Window is Global object for Browers
+Global is global object in NodeJs
+
+Compliation and interatations
+compilation steps
+ create placeholders for vairaiables
+ it will create placeholder based on the global and fuction scope
+Execution steps
+	It will assing the values and execute the instructions
+
+The Global scope problems
+if we didn't create the variables using var they will go into the global scope
+
+Hoisting -- variable declaration happens during compilation and before assigning values during the compilation
+a =10;
+console.log(b);
+c++;
+
+var a,b,c;
+
+Using Strict mode;
+"use strict"; 
+
+Clouser -- > related inner functions
+function which remembers scope dring the time of declaration
+
+var a = 10;
+
+function outer(){
+ var fn = function(){
+ }
+ return fn;
+}
+
+
+Module Pattern - inside scope can't be accessed outside scope
+we don't have private to hide the objects using this pattern we can hide 
+create a function and define the varables and return the object using closures
+----------------
+
+
+Java script is single threaded
+
+
+Objects and Prototypes
+function createEmployObject(firstName, secondName){
+	this.firstName = firstName;
+	
+}
+
+var obj = new createEmployObject("firstName", "secondName");
+
+Asynchronous JavaScript - callabacks and Promises
+Client side framework
+Server side framework
+
+.filter()
+if the callback function returns true, the current element will be in the resulting array. If it returns false, it won’t be.
+var rebels = pilots.filter(function (pilot) {
+  return pilot.faction === "Rebels";
+})
+
+.map() 
+ Basically is takes 2 arguments, a callback and an optional context (will be considered as this in the callback). The callback runs for each value in the array and returns each new value in the resulting array.
+
+.reduce() Agggating function
+After running the callback for each element of the array, reduce will return the final value of our accumulator, staring value
+is an easy way to generate a single value or object from an array.
+
+
+
+Karma is a test-runner, so it runs your test. 
+Jasmine is the framework that let you write test
+
+In my opinion in Angularjs you :
+
+    must unit-test services, because your business code is there.
+    should unit-test controller, because users actions are there.
+    may unit-test custom directives (if you plan to share that directive with others, it's a must)
+
+Protractor is made for E2E testing (tests navigation like a real user). It combines WebDriverJS with Jasmine and lets you write End-to-End tests (you simulate a real browser and taking real actions) with Jasmine syntax.
+
+That kind of test is also really important in a web app.
+
+You should not test everything, especially at the start of the project, those kinds of tests usually come with a high level of maintenance (i.e., when you change a screen you may have to change the test).
+
+What I do is test the critical path and features. I made a reading app, so in my case, it was login, sign up, payment, access book, and access reader.
+
+
+
+

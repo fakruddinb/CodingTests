@@ -1,0 +1,100 @@
+why lambdas?
+Enable functional programing
+Readable and consice code 
+Easier-to-use APIs and libraries
+Enable support for parallel processing
+
+Functional vs Object Oriented Programming
+Functions are firstclass objects. Objects are firstclass citigens
+Passing Behavior in OOP - everything is an object, As part of an object , All code blocks are assicicated with the class and object. there is no code is java without classes or objects
+we can't have function in issolation. 
+
+Passing the behaiviour and call the method on the behaiviour.. But here we are passing the thing or object which has the action. we can't pass action itself.
+
+Introducing Lambda Expressions --Let's take our first look at a Lambda function - by transforming a method declaration step-by-step into a lambda expression.
+
+So if we want to pass the action insted of the object then this will be resloved by using the lambdas
+
+Lambdas let you create action --> these are the functions in the isolation and here functions used can values.
+
+Objects acts as values in the 
+
+Block of code can't be assicaited with the values
+
+ablockCode = {
+	----
+	----
+}
+
+assing the method itself --> this can be done using lamda in java -- lambda expression
+
+ablockCode = () -> {
+	----
+	----
+}
+
+ablockCode = () -> one line --> then no need of curly braces
+
+Problems --> things and nouun instead of 
+
+What is takes to create lambda expression?
+Lambda Expression Examples
+
+Let's now get familiar with the lambda syntax by writing a few more expressions. return types are automatically recogined by java compiler and no need to use return in lambda expression
+
+greetingFunction = () -> System.out.println("Hello world");
+
+addfunction = (int a, int b) -> a + b;
+
+SafeDevide = (int i, int j) -> { 
+	if j == 0 return 0;
+	else
+	return i/j;
+}
+
+Lambda as interface type --> What is the type of a lambda expression? How do you declare a variable and assign it to a lambda expression? 
+The type of the function is interface itself.
+
+Greeting lambdaGreeting = () -> System.out.println();
+
+The interface should have only one method.  And if you annotated with @functionalInterface it will not allow you to right more then one interface
+
+Lambdas vs Interface Implementations - This video compares the similarity between lambda expressions and anonymous inner class types.
+lambdas expressions are implamentation of the interfaces
+
+
+Type Inference -- Learn how the Java compiler and runtime infers type information about a lambda expression based on the type it is assigned to.
+
+for lambda expression the compiler does type inference.. this type inference is very important to figure out what is the expression type and what type of argument it takes
+
+So lot of inference will be happening when we use lambda like what type of input argument, type of return and type of interfaces
+
+Learn how lambda expressions can be backward compatible by passing a lambda expression to a class that's been around since JDK 1 - The Thread and Runnable types.
+
+Functional Interface --Learn about the term functional interface and how it describes the type of interface you have already learned by now. 
+Also use the @FunctionalInterface annotation to mark such interfaces.
+
+
+2.1 Using Function Interfaces
+
+Let's look at some out-of-the-box functional interfaces that come with Java 8 that lets us write some lambda expressions without having to declare an interface first.
+Consumer --> will take one param
+BiConsumer --> will take 2 params 
+Predicate -->	
+
+
+Outofbox functional interfaces in java8 
+java.util.functions
+Predicate - return boolean value by taking type
+Consumer -
+Supplier - 
+Function - takes 2 types and return one type
+
+Exception Handling in Lambdas - can be catch where we are writing the lambda and also we can abstract out using some wraper function to handle the exception so that lambda is neet and clean
+
+Closures in Lambda Expressions - whenever we pass functions as a values we have to deal with clousers.
+whenever the lambda expression will froze the values of releted variables in the scope. it means the scoped variables are effectivley final.
+The this reference in lambdas -- this can be used with refrence to class releted that instance
+Method References - when you call another method in the lambda this can be done by :: operator ie theClassNAMe :: methodName() method refrence expression () -> methodName()
+System.out::println
+The foreach iteration	

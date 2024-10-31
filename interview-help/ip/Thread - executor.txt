@@ -1,0 +1,11 @@
+
+    Executor Interfaces define the three executor object types.
+	
+    Thread Pools are the most common kind of executor implementation.
+	
+    Fork/Join is a framework (new in JDK 7) for taking advantage of multiple processors.
+
+	
+    Executor, a simple interface that supports launching new tasks.
+		ExecutorService, a subinterface of Executor, which adds features that help manage the lifecycle, both of the individual tasks and of the executor itself.
+			ScheduledExecutorService, a subinterface of ExecutorService, supports future and/or periodic execution of tasks.

@@ -1,0 +1,25 @@
+zookeeper-server-start.bat "C:\kafka_2.13\config\zookeeper.properties"
+
+kafka-server-start.bat "C:\kafka_2.13\config\server.properties"
+
+create a topic 
+kafka-topics.bat --create --topic quickstart-events-topic --bootstrap-server localhost:9092
+
+
+kafka-topics.bat --describe --topic quickstart-events-topic --bootstrap-server localhost:9092
+
+
+kafka-topics.bat --create --topic druid-events-topic --bootstrap-server localhost:9092
+
+
+kafka-console-producer.sh --topic quickstart-events-topic --bootstrap-server localhost:9092
+
+kafka-console-consumer.sh --topic druid-events-topic --from-beginning --bootstrap-server localhost:9092
+
+
+
+spring:
+  kafka:
+    streams:
+      bootstrap-servers: "10.220.129.90:19092,10.220.129.91:19092,10.220.129.92:19092,10.220.129.93:19092,10.220.129.94:19092,10.220.129.95:19092,10.220.129.96:19092,10.220.129.97:19092,10.220.129.98:19092,10.220.129.99:19092,10.220.129.100:19092,10.220.129.101:19092"
+      application-id: "spring-kafka-stream-id"

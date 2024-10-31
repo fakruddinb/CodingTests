@@ -1,0 +1,208 @@
+
+What is the Object class?
+Can you cite methods from the Object class?
+What differences between String and char[]? 
+How do you the sum the elements of an array? 
+What is the JVM?
+How can you sort an array?
+What is the main characteristic of the String class?
+What is the difference between == and equals()?
+What about equals() and hashCode()?
+How can you duplicate an array?
+12How can you reverse a String?
+What is a functional interface? 
+Difference between overriding and overloading? 
+What is a Map?
+What is an ArrayList?
+Explain finally
+How to make a class immutable? 
+Difference between String, StringBuffer, and String Builder
+20How to create a Singleton?
+What is a static method?
+How can you find a character in a String?
+What is a method reference?
+What is a default method?
+What is a JIT? 
+What kind of method can you override? 
+What is the signature of a method?
+What is a marker interface? 
+29What is the difference between Collection and a Set? 
+30How does finalize() work? 
+What were the main features of Java 8?
+Do Streams and Collections have common methods?
+How can you tell that a String is an anagram of another String? 
+On what kind of source can you build a stream?
+35What is a groupingBy()? 
+36What is the difference between FIFO and LIFO?
+What is the GoF?
+How can you create a Comparator?
+Can you cite functional interfaces from before Java 8?
+Difference between a sorted and an ordered collection?
+How can you open a file for reading binary data?
+How can you print an array on the console?
+How does a SortedSet work? 
+What pattern has been used to create the Java I/O API?
+How can you count how many time a letter appears in a String?
+What is a bucket in a Map? 
+What does synchronized mean?
+What is the difference between a Collection and a Stream?
+What is the difference between File and Path?
+What difference between a checked and an unchecked Exception?
+What is the hash code of an object?
+What is an ExecutorService?
+What is an Iterator? 
+What are the four Java I/O base classes? 
+How many objects can you put in a Collection?
+59What is the maximum length of a String in Java?
+How does a Set knows that it already contains an element? 
+How is Arrays.asList() working?
+Can you cite some methods from the Stream API?
+What is the var keyword in Java? 
+How can you create an unmodifiable list?
+What is the class named Class? 
+How can you find duplicates in a list?
+What is a sealed type in Java? 
+How is List.of() working?
+How can you start a Thread? 
+What is the difference between Runnable and Thread? 
+What is the difference between map() and flatMap()? -
+How is synchronization working?
+What is a generic type?
+Use generic types to maximize code reuse, type safety, and performance.
+will introduce strong type checking and eliminates the explisit casting and enable to design the generic algorithem
+
+How can you stop a Thread?
+How can you remove elements from a Stream? -
+How is Set.of() working?
+How can you join Strings with a separator? 
+How can you update a field using the Reflection API? 
+How can you declare a generic type on a static method? 
+What does passing by value mean?
+Difference between and intermediate and a terminal operation? 
+What list can you pass to a method that takes a List of Number? 
+What is a deadlock?
+Creating an instance of a Class using the Reflection API?
+How can you model a concurrent task in Java? 
+Difference between toList() and Collectors.toList()? 
+Comparing Doubles with a comparator of Numbers?
+How can you model a concurrent task in Java?
+What is an annotation? 
+When should you use ? extends T?
+What is a Constructor?
+What is a short-circuit method ?
+What is an atomic variable?
+What is a Record?
+How can you invoke a method using the Reflection API? 
+What is a ConcurrentModification Exception? 
+What is a collector? 
+What is a daemon thread? 
+What is a race condition? 
+What is the type ? super T? 
+What does static mean?
+ 
+
+
+
+What is an enumeration?
+How is the List.sublist() method working?
+
+
+
+
+
+
+
+
+118 How can you create a Map to hold 20 elements?
+
+
+112.what is Iterable?
+An interfaces extend by collection
+one abstract method iterator
+create and iterable using foreach
+Iterable<> 
+115. What are the four fundamental functional interfaces in Java? Java 
+Consumer<String> consumer = s-> System.out.println(s); take a argument and return nothing
+Suppiler<Double> supplier = () -> Math.PI; doesn't take anything and return something
+Function<String, Integer> length = s-> s.length(); takes something and return something else
+Predicate<Integer> predicate = i -> i% 2 == 0; takes argument and return boolean    
+Runnable task = () -> "I am the fifth"; doesn't take any argument and doesn't return anything
+BiConsumer<String, String> biCons = (s1,s2) -> System.out.println(s1+s2)
+BiFunction<String, String, Integer> 
+BiPredicate 
+takes two arguments
+UnaryOperator<String> unary = 
+BinaryOperator<String> binary = (S1,s2) -> s1 + "" + s2
+specilization for premitive type
+
+
+What does Thread.interrupt()?
+tries to interrupt your thread in two ways
+it can make 
+
+sleep(), wiat(), motify()
+Synchronization
+Methoids in I/) and NIO
+dont try to 
+use Executor and fork join pool
+
+
+106. What does Comparable mean?
+
+107.How can you create a prefilled map?
+Map.of(1, "one", 2, "aa". -- until 10 pattern) you can't overload this kind of method with vararg
+var e1=Map.entry(1, "")
+var e2=Map.entry(2,"")
+Map.ofEntries(e1,e2)
+Map and entrier are non-modifiable, you can not pass the same key
+you can't use null key or values
+
+108,What is the return type of max()
+An Optional 
+
+and this is what you need 
+8445455640
+
+Null or Integer.MIN_Value
+
+105. why is Thread.stop() deprecated?
+Because it is unsafe. 
+It could lead to an inconsistent state
+Or to resource leaking
+It now throws and exception
+deprecated in 1.2
+
+103.What is a downstream collector?
+A Collector !
+That you can pass to the methods of Collectors
+
+Needed for mapping filtering flatMapping
+
+102.What is the type ?
+
+
+100.What is a race condition? 
+
+109 what is Future?
+An object to communcate with the task that is being executed in another thread
+
+you get a future object when you submit a Runnable or a callable to an executiveService
+executorservice immidiatly give you future object once you submit your task. but it will execte in an other thread , to check either the task is done or any it produce any error
+there is overloaded method that takes timeout. this may be safer to preare this pattern rather an regualer get
+
+starting with java 21 . we have state which return running, success, failed or canceled.
+
+110. What is multiple inheritance?
+Type Inheritance - 
+Behaviour Inheritance - concreate methods 
+State Inheritance - not supported by java
+Favour object orientaion 
+111. What is the no-arg empty constructor?
+compilar will create empty no org constrctor if it finds no constrctor in the class
+If you create a class and dont provide anything then compilar will add the no arg constuctpor
+if you have argument constrctor and no no-org constrctor then it will have compilar error
+
+Used to create object using this while in relfaction
+114 What is the first thing a consructor is do?
+It calls another constructor, the other constrctor can be from same the class or from super. Constructing an object require for all the consructor to be called
+Super or this

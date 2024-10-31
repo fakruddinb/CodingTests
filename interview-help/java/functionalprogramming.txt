@@ -1,0 +1,127 @@
+Java 8 lambda
+understanding lambda
+enable functional programing
+readable concise code by eliminating bootstrap code
+enable or use multiprocessing 
+
+oop vs functional
+different programing paradigm
+
+pass function as values
+
+readingfuntion = () -> System.out.println("hi this is lambda");
+
+using lambda
+
+Create interface and define a method signature
+Type inferences will happened based on the interface method defined
+
+Functional interface
+it should have only one abstract method is called functional interface
+use @FunctionalInterface
+out of box functional interface
+like Predicate which takes one argument and return boolean has test method
+supplier takes get the returns apply method
+Consumer takes the object and return void and has accept
+Function takes one type and returns other type
+
+Exception handling
+can be handled in the lambda
+best thing what we can do is we can create wrapper lambda to handle the exception	
+
+Clousers --> scope of the values
+enclosing the scope of the other variables are effectivly final, if you want to use the variables apart from the lambda
+
+this usage in lambda
+lambda will not override the this reference it will error out if you are usinig this in lambda
+	
+Method refernces
+are short hands using :: symbol
+
+System.out::println
+
+
+
+understanding lambdas
+
+Lambads Enables functional programming and they are just functions which exists in issolation and do not belongs to any class and these functions can be treated as values.
+
+helps us to write Readable and consize code ,eleminate boiler plate code, help in writing better apis ,add support parallel processing.
+
+Functional Vs Object oriented code (Everthing is an object and all the block of code are associted with classes and objects and it is always things and all are parts of class)
+
+Object-oriented languages are good when you have a fixed set of operations on things, and as your code evolves, you primarily add new things. This can be accomplished by adding new classes which implement existing methods, and the existing classes are left alone.
+
+Functional languages are good when you have a fixed set of things, and as your code evolves, you primarily add new operations on existing things. This can be accomplished by adding new functions which compute with existing data types, and the existing functions are left alone.
+
+Passing Behavior in OOP- Let's look at behavior parameterization - how we can pass behaviors to methods in Java 8 or earlier.
+
+Create an interface and implement that interface with the classes you want impliment behaviour.
+crate the class and pass that behaviour to execute it.
+
+Here we are passing the thing that has the behaiour and we are not passing behaviour itself 
+
+We want to pass only action to be passed insted of things having an action.. :)
+This can be done using Lamdas --. which are just functions which exists in issolation and do not belongs to the class and these functions can be treated as values
+Functions as treated as value and method is assigned to varaibles 
+
+Functions as values
+
+Using lamdas
+aBlockOfCode = public void perform(){ System.out.println("This is prining");} typicall function
+
+Lambda expression
+aBlockOfCode = ()->{System.out.println("This is prining");}  and after removing the unneccessary code
+aBlockOfCode = ()-> System.out.println("This is prining"); one line
+
+addNumber = (int a, int b) -> a+b;
+
+safeDevision = 
+(int a, int b) -> { 
+	if(b = 0)return 0;
+	return a/b;
+}
+
+
+Lambda as interface type - What is the type of a lambda expression? How do you declare a variable and assign it to a lambda expression?
+Lamda function type is interface type
+Create interface and create one method exact same signature of the lambda and assign that type to varaibles
+Rules -> Only one method and that has to have the same signature of the lambda
+only one abstract method and you can have more implemented method
+lambda are implementation for the interfaces
+It is not actully the implementation of the ananymous inner class and they are diffreent
+
+Method Refernces
+Type Inference - how the Java compiler and runtime infers type information about a lambda expression based on the type it is assigned to.
+Lambdas can guess the input types and not need to send the input types and it will infer from the interface itself
+Runnable Using Lambdas - backward compatible for all the interfaces 
+Functional interfaces-- mark the interface as lambda interface @functionalInterface it makes sure that or enforce to allow only one abstract method
+
+Functional Interface
+Lambdas vs Interface Implementations
+
+Outofbox functional interfaces in java8 
+java.util.functions
+Predicate - return boolean value by taking type
+Consumer -
+Supplier - 
+Function - takes 2 types and return one type
+
+Exception Handling in Lambdas - can be catch where we are writing the lambda and also we can abstract out using some wraper function to handle the exception so that lambda is neet and clean
+
+Closures in Lambda Expressions - whenever we pass functions as a values we have to deal with clousers.
+whenever the lambda expression will froze the values of releted variables in the scope. it means the scoped variables are effectivley final.
+The this reference in lambdas -- this can be used with refrence to class releted that instance
+Method References - when you call another method in the lambda this can be done by :: operator ie theClassNAMe :: methodName() method refrence expression () -> methodName()
+System.out::println
+The foreach iteration
+
+
+Collection improments
+
+Stream and parallelStream
+source
+operation takes lambda expression
+terminal operation
+foreach
+count 

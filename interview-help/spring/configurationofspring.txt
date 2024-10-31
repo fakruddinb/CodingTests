@@ -1,0 +1,178 @@
+Configuration of Spring boot
+
+application.properties
+server.port = 8081
+Spring boot common application properties will give all the default properties
+
+Java Persistence API
+Spring data JPA
+
+Deployment--
+Independently deployable units
+java -jar jarname
+
+Monitoring the spring boot application
+actuator
+url/health
+url/beans
+management.port so that will deploy with other port
+
+Microservice communication- this can be done 
+dynamic urls
+load balancing
+multiple environment.
+patterns - Service discovery
+client discovery service - spring cloud is uses
+server side discovery service 
+
+technologies - discovery servers
+Euroka server - netflix 
+Add @EurokaServer - to make the discovery server application 
+euroka client register themsells
+Hasicorp consul
+	
+Fault tolerant - Agenda
+Understanding possible some causes for failures in microservices
+Threads and pools and impacts of slow microservices
+Timeouts and its limitation
+Circuit break pattern
+Hystrix concepts and implementation
+Bulkhead pattern
+
+understand challenges with availability
+making micro services resilient and fault tolerant
+
+what is fault tolerant?
+Impact of fault or error on the microservice, How it behaves when the error occurs
+
+what is Resilience?
+how many faults it can tolerant
+
+what are the issues with microservice
+1.when instance goes down?
+sol: duplicate instance
+
+2.instance is slow - a depended microservice is slow this is huge impact it will make all the related services slow
+due to this all the services calls are slow and the main reason is "Threads" -blocking 
+request will take more time will block and if it exceeds the available threads
+Soln 1
+it can be solved by using timeout.
+Set the timeout when you consume the webservice at the clint side -- but it is not good
+Soln 2: Circuit break patters - It basic function is to interrupt current flow after the fault is detected
+slow -- don't call that service
+Detect something is wrong
+Take temporary steps to avoid the situation getting worse.
+Deactivate the "problem" component so that it doesn't affect downstream component
+Something is working break the circuit.
+interrupt current flow after a fault is detected
+
+
+Apply microservice circuit breaker part
+when does the circuit trip?
+last n request to consider for the decision : 5
+how many of those should be failed : 3
+Timeout duration : 2s
+when does the circuit un-trip?
+How long service to weight (sleep window): 10sec  - how to find this time -- 2 things , how many request are coming in and how much is the thread pool
+
+Once the circuit break we have to have fallback.
+Throw an error - not a good idea 
+Return a fallback "default" response
+Save previous responses (cache) and use that when possible
+
+why circuit breakers?
+Failing fast
+fallback functionality
+Automatic response
+
+technologies = Histrix - Open source library originally created by Netflix
+implement circuit breaker patterns
+the configuration params and it does the working
+It works well with Spring Boot
+
+It is not actively in development
+One of the most promising patterns comming on and it is Adaptive fault tolerant 
+
+Steps to implements add netflix-hystrics
+Add the maven depencncy spring-cloud-starter-netflix-histrix dependency
+Add @EnableCircuitBreaker in the application class
+Add @histrixCommand(fallbackMethod = "fallBackmethodName") to methods that need circuit breakers
+Configure Hysrix behavior - provide the parameters
+
+fallback methods-- It creates proxy classes to handles all these activities so all that is abstracted
+
+Learn how to add histrix dashboard where we can see all the activities of the urls used 
+
+
+need to implement fallback in separate spring component for diffent urls to be called
+
+bulk head patterns
+Ship example- 
+compartment for number of request/ threads for each service
+
+threadpoolkey
+threadpoolProperties = {
+@HistrixProperty (name = "coresize", value = "20")
+@HistrixProperty (name = "maxsize", value = "20")
+}
+
+
+
+
+Level 3
+Configuration micorservice
+requires settings 
+saperate configuration files "Don't hardcode"
+db connection, creditials, paths, spring configration
+properites, yaml, json
+effect in production without depolying
+
+Configuration goals
+Externalised
+by adding the configuration properties file in the same path of that jar
+by suppling the values 
+
+environment specific by adding profiles
+Consistent - by having a separete microservice for configuration, Spring cloude configuration
+version history - git repo
+Real-time management - 
+
+configuation features in spring
+value, @value : use this to get the value for defined properity, if we don't have values we can set a deafult value by adding ${property name : deafult value}
+we can get the list of the properties for , separted values or map of properites {}
+
+Configprops, - @ConfigurationProperties 
+create a bean and set the top properties in anotation
+we can see all the properties in acuator	Actuator
+yaml configration file help in removing lot of verbose
+looks nice, and can be very readable
+
+Spring profiles -- reduce manual management
+By defult it has a deafult profile 
+We can create the multiple profiles by adding the - and appending like dev production etc
+the syntex or statnd of file is application-<profileName>.extn like applciation-test.yaml
+
+define all the pro
+spring.profile
+
+Environment - is the object in spring where you can autowire and get access to all the properites
+we should avaoide using this as it is a lookup instated inject it
+
+Spring boot Config Server- spring cloud config server
+from single service to multiple microservices
+Consistence is super importent in configuration- saprate configuration service
+Apache zookeeper
+ETCD - distributed key-value store
+Hasicorp consul
+Spring cloud configuration server, enable spring cloud 
+-- configuration service where we need to put the configuration 
+we should have datasource where we can use version control it has to connect to git repo
+config in git repo - give the setting to check the spring cp
+
+Dynamic Configuration
+
+Spring client config depencncy - spring cloud starter config
+specify the spring config url in proportis file
+
+Best practices and patters
+

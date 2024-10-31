@@ -1,0 +1,134 @@
+Java memory model
+
+Stack
+Heap : intial size : -Xms, Maximum sixe: -Xmx
+young Generation
+- keep Memory
+- Eden Memory
+- Survivor Memory spaces(50,51)
+
+Old Generation
+
+Perm Space: -XX:PermSize and  -XX:MaxPermSize
+Meta Space: MaxMetaspaceSize
+
+
+PermGen (Permanent Generation) is a special heap space separated from the main memory heap. The JVM keeps track of loaded class metadata in the PermGen. Additionally, the JVM stores all the static content in this memory section. This includes all the static methods, primitive variables, and references to the static objects.
+
+Furthermore, it contains data about bytecode, names, and JIT information. Before Java 7, the String Pool was also part of this memory. The disadvantages of the fixed pool size are listed in our write-up.
+The default maximum memory size for 32-bit JVM is 64 MB and 82 MB for the 64-bit version.
+
+However, we can change the default size with the JVM options:
+
+-XX:PermSize=[size] is the initial or minimum size of the PermGen space
+-XX:MaxPermSize=[size] is the maximum size
+Most importantly, Oracle completely removed this memory space in the JDK 8 release. Therefore, if we use these tuning flags in Java 8 and newer versions, we'll get the following warnings:
+
+>> java -XX:PermSize=100m -XX:MaxPermSize=200m -version
+OpenJDK 64-Bit Server VM warning: Ignoring option PermSize; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: Ignoring option MaxPermSize; support was removed in 8.0
+...
+Copy
+With its limited memory size, PermGen is involved in generating the famous OutOfMemoryError. Simply put, the class loaders weren't garbage collected properly and, as a result, generated a memory leak.
+
+Therefore, we receive a memory space error; this happens mostly in the development environment while creating new class loaders.
+
+Metaspace is a new memory space – starting from the Java 8 version; it has replaced the older PermGen memory space. The most significant difference is how it handles memory allocation. 
+Specifically, this native memory region grows automatically by default.
+
+We also have new flags to tune the memory:
+
+MetaspaceSize and MaxMetaspaceSize – we can set the Metaspace upper bounds.
+MinMetaspaceFreeRatio – is the minimum percentage of class metadata capacity free after garbage collection
+MaxMetaspaceFreeRatio – is the maximum percentage of class metadata capacity free after a garbage collection to avoid a reduction in the amount of space
+Additionally, the garbage collection process also gains some benefits from this change. The garbage collector now automatically triggers the cleaning of the dead classes once the class metadata usage reaches its maximum metaspace size.
+
+Therefore, with this improvement, JVM reduces the chance to get the OutOfMemory error.
+
+PermGen is still around with JDK 7 and older versions, but Metaspace offers more flexible and reliable memory usage for our applications.
+
+
+Java memory model JMM is a specification which guarantees visibility of fields (aka happens before) amidst reordering of instructions. 
+set of rules which has to be all the implamentation of jvm
+
+any fields writen to 
+
+
+Each CPU core will have core cached share and cached share below it.
+all the changes to instance variable will be done in core cached share and not in cached share.
+in case of multi threading it will not get the latest change to that variable in the changed by the thread run on the other core.
+we need somebody to flush the changes to shared cache below.. this is done using the volatile keyword
+
+and if it is coponded operation it should use syncronised block
+
+syncrinise(object){
+
+}
+
+Lock lock = new ReentrantLock()
+Condition condition = lock.newCondition()
+
+lock.lock()
+// code
+lock.unlock()
+
+Mutliple threads wait on the same condition
+condition.await() <- similar to wait() method suspend the thread
+condition.signal() <--  similar to notify this with the awake 
+condition.signalAll() <-- notifyall
+
+Perform await in loop always to fix the spurious wake up
+
+Indicate completion of a condition.
+
+Co
+
+//instance of executer service
+ExecuterService service = Executors.newFixedThreadPool(10)
+// create a thread pool
+service.
+fixedNothread poolnumber will be based on no of cores present
+or thread will be some good number based on current criteria if they ware IO intensive operation
+
+ForkJoinPool - task producing subtask
+
+
+blocking and non bloking
+
+
+Future<Integer> future = service.submit(new Task());
+ Here the task should implement Callable interface not the runnable
+ Callable will return something for their call() method
+
+Integer integer = future.get() // this is blocking operation
+
+This approch has issues to when the depending 
+
+CompletableFuture - perform posible asynchronous (non-blocking) computation and trigger depenedant computation which could also be asynchronous.
+
+CompletableFuture.supplyAsync(() -> getOrder)
+.thenApply(objec -> method())
+.thenApplyAsyn(objec -> method())
+.thenAccept(0-> sendmail())
+
+concurency vs parallaisam
+"parallasim is doing lot of things at once" so that we can speedup our programms
+Java enable parallaisam using 
+
+Raw Threads- > using Thread and Runnable interfaces
+ThreadPool 
+ExecutorService
+ForkJoinPool
+Custom ThreadPools (eg: webservers)
+
+-- Requires more then one CPU core
+
+Concurrency -- using shared resources - "dealing lot of things at once"
+to fix the issues with shared resources 
+Tools to deals with concurency
+- Locks/Syncronization
+- Atomic classes
+- ConcurrentData structure(eg : ConcurrentHashMap, BlockingQueue)
+- CompletableFuture
+- CountdownLatch/Phasers/Cyclic Barier/Semaphore etc
+

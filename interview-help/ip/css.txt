@@ -1,0 +1,7 @@
+
+	inline elements and block elements
+ A block element is an element that takes up the full width available, and has a line break before and after it. <h1>, <p>, <li>, and <div> are all examples of block elements.
+
+ An inline element only takes up as much width as necessary, cannot accept width and height values, and does not force line breaks. <a> and <span> are examples of inline elements.
+
+ 

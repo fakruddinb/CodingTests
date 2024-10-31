@@ -1,0 +1,10 @@
+docker ps -all
+docker exec -it e1469bce2ef2 bash
+
+
+docker build -t noc-reports.jar .
+ 
+ 
+docker run -p 8080:8080 noc-reports.jar
+
+docker-compose up --build

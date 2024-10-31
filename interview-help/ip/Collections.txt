@@ -1,0 +1,100 @@
+
+
+
+Map - 
+Hashmap best and average case for Search, Insert and Delete is O(1) and worst case is O(n).
+ hashmap's get and put operation takes O(1) time only in case of good hashcode implementation which distributes items across buckets.
+
+In JDK 8, HashMap has been tweaked so that if keys can be compared for ordering, then any densely-populated bucket is implemented as a tree, 
+so that even if there are lots of entries with the same hash code, the complexity is O(log n). 
+That can cause issues if you have a key type where equality and ordering are different, of course.
+
+    Map (just the interface)
+        Dictionary (obsoleted abstract class)
+            Hashtable (the "old" map implementation lives on it's own)
+        AbstractMap (the basic functionality of the "new" map implementations)
+            HashMap (the first concrete map implementation for general purpose use) no order, Adds one null key and any or duplicate values,No Duplicate Key are allowed
+                LinkedHashMap (extends HashMap by mainaining the linked list)--> retain the order of insertion ,so the iteration order is the same as insertion order,not support null key elements
+		SortedMap (Interface)
+			NavigableMap(Interface)
+				TreeMap(class) tree based mapping. Its put/get operations take O(log n) time. It requires items to have some comparison mechanism, either with Comparable or Comparator. The iteration order is determined by this mechanism.
+		ConcurrentMap(interface)		
+			ConcurrentHashMap
+			ConcurrentNavigableMap(interace)
+				ConcurrentSkipListMap
+			
+ConcurrentHashMap uses multiple buckets to store data. This avoids read locks and greatly improves performance over a HashTable. Both are thread safe, but there are obvious performance wins with ConcurrentHashMap.
+
+When you read from a ConcurrentHashMap using get(), there are no locks, contrary to the HashTable for which all operations are simply synchronized. HashTable was released in old versions of Java whereas ConcurrentHashMap is a java 5+ thing.
+
+HashMap is the best thing to use in a single threaded application.
+
+Hashtable is belongs to Collection framework ConcurrentHashMap belongs to Executor framework.
+Hashtable uses single lock for whole data. ConcurrentHashMap uses multiple locks on Segment level (16 by default) instead of object level i.e. whole Map.
+ConcurrentHashMap Locking is applied only for updates. In case of of retrievals, it allows full concurrency, retrievals reflect the results of the most recently completed update operations. So Reads can happen very fast while write is done with a lock.
+ConcurrentHashMap doesn’t throw a ConcurrentModificationException if one thread tries to modify it while another is iterating over it and does not allow null values.
+ConcurrentHashMap returns Iterator, which fails-safe(i.e. iterator will make a copy of the internal data structure ) on concurrent modification.
+ConcurrentHashMap uses a database shards logic(Segment<K, V>[]   segments) , i.e. divide the data into shards(segments) than puts locks on each shard(segment) instead of putting single lock for whole data(Map).
+
+To understand the ConcurrentHashMap more technically please look at this link
+
+The following analogy helps you get understand the concept only(not logic)
+
+    Assume Hashtable and ConcurrentHashMap are two types of Homes.
+    Hashtable locks home's main door.
+    ConcurrentHashMap locks specific room door instead of main door.
+
+    Which is more efficient for threaded applications?
+
+ConcurrentHashMap is more efficient for threaded applications.
+
+Lists -
+Collection	
+	List (just the interface)
+        Vector (the "old" map implementation lives on it's own) - it is synchronized
+        ArrayList (the first concrete List implementation for general purpose use) no order, Adds null values
+        LinkedList (also implements Queue and DeQueue)--> retain the order of insertion ,so the iteration order is the same as insertion order
+		CopyOnWriteArrayList
+
+Sets -
+Collection	
+	Set (just the interface)
+        HashSet (the first concrete List implementation for general purpose use) no order, Adds null values
+			LinkedHashSet (also implements Queue and DeQueue)--> retain the order of insertion ,so the iteration order is the same as insertion order
+		CopyOnWriteArraySet
+		SortedSet
+			NavigableSet
+				TreeSet
+				ConcurrentSkipListSet
+				
+Queues -
+Collection	
+	Queue (just the interface)
+        PriorityQueue (the first concrete Queue implementation for general purpose use) no order, Adds null values
+		DeQueue (interface)
+			ArrayQueue
+		BlockingQueue (interface)
+			ArrayBlockingQueue
+			LinkedBlokingQueue
+			PriorityBlockingQueue
+			SynchronusQueue
+			DelayQueue
+			BlockingQueue (interface extends both BlockingQueue and DeQueue)
+				LinkedBlockQueue
+			TransferQueue (interface extends both BlockingQueue)
+				LinkedTranferQueue
+				
+Iterator and listIterator		
+
+Object - equals(object), returns true/false --
+Comparable - compareTo(object), return int, Sort in natural order etc.
+Comparator - compare(object from, object to) -- return int sort but specifying the comparater
+
+
+					║         List         ║            Set              ║
+╠═══════════════════╬══════════════════════╬═════════════════════════════╣
+║     Duplicates    ║          YES         ║            NO               ║
+╠═══════════════════╬══════════════════════╬═════════════════════════════╣
+║       Order       ║       ORDERED        ║  DEPENDS ON IMPLEMENTATION  ║
+╠═══════════════════╬══════════════════════╬═════════════════════════════╣
+║ Positional Access ║         YES          ║            NO      		 ║
